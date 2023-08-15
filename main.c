@@ -21,6 +21,7 @@ typedef struct	s_img
 	int		line_len
 }				t_img;
 
+
 int	main()
 {
 	t_win	*win;
