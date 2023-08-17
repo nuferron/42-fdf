@@ -1,83 +1,115 @@
-#include "minilibx/mlx.h"
-#include <stdlib.h>
+#include "fdf.h"
 #include <stdio.h>
-#include <string.h>
+#include <math.h>
 
-typedef struct	s_win
+void	straight_line(t_data *data, t_line *line)
 {
-	void	*mlx_init;
-	void	*mlx_wdw;
-	int		height;
-	int		width;
-}	t_win;
+	int	i;
 
-typedef struct	s_img
-{
-	t_win	*win;
-	void	*img_ptr;
-	char	*addr;
-	int		height;
-	int		width;
-	int		bpp;
-	int		endian;
-	int		line_len;
-}				t_img;
-
-
-t_win	*new_program(int width, int height, char *str)
-{
-	t_win	*win;
-
-	win = (t_win *)malloc(sizeof(t_win));
-	if (!win)
-		return (win);
-	win->mlx_init = mlx_init();
-	win->mlx_wdw = mlx_new_window(win->mlx_init, width, height, str);
-	if (!win->mlx_wdw)
-		return (win);
-	return (win);
+	i = 0;
+	if (line->xo != line->xf)
+	{
+		while (i < line->xf)
+		{
+			print_pixel(data, line->xo, line->yo, color);
+			(line->xo)++;
+			i++;
+		}
+	}
+	else
+	{
+		while (line->yo != line->yf)
+		{
+			print_pixel(data, line->xo, line->yo, color);
+			(line->yo)++;
+			i++;
+		}
+	}
 }
 
-int	main()
+int	is_consec(int num1, int num2)
 {
-	t_win	*win;
-	t_img	*img4;
-
-	/*win = (t_win *)malloc(sizeof(t_win));
-	if (!win)
-		return (-1);
-	win->mlx_init = mlx_init();
-	if (!win->mlx_init)
-		return (-1);
-	win->height = 400;
-	win->width = 600;
-	win->mlx_wdw = mlx_new_window(win->mlx_init, win->width, win->height, "FDF");
-	if (!win->mlx_wdw)
-		return (-1);*/
-	win = new_program(300, 300, "FDF");
-	if (!win)
-		return (-1);
-	img4 = (t_img *)malloc(sizeof(t_img));
-	img4->win = win;
-	img4->img_ptr = mlx_new_image(win->mlx_init, 4, 4);
-	img4->addr = mlx_get_data_addr(img4->img_ptr, &(img4->bpp), &(img4->line_len), &(img4->endian));
-	img4->width = 4;
-	img4->height = 4;
-	memcpy(img4->addr, "s4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vfs4vf", 16*4);
-	mlx_put_image_to_window(img4->win->mlx_init, img4->win->mlx_wdw,img4->img_ptr, 10, 10);
-	mlx_loop(win->mlx_init);
+	if (num1 + 1 == num2 || num1 - 1 == num2)
+		return (1);
+	else
+		return(0);
 }
 
-/*int	main()
+/*int	is_around(t_line *line)
 {
-	void	*mlx_ptr;
-	void	*mlx_wdw;
-
-	mlx_ptr = mlx_init();
-	if (!mlx_ptr)
-		return (-1);
-	mlx_wdw = mlx_new_window(mlx_ptr, 500, 500, "FDF");
-	if (!mlx_wdw)
-		return (-1);
-	mlx_loop(mlx_wdw);
+	if (line->xo == line->xf && line->yo == line->yf)
+		return (0);
+	if (is_consec(line->xo, line->xf) && is_consec(line->yo, line->yf))
+	{
+		if (line->yo + 1 == line->yf)
+			return (1);
+		else if (line->yo - 1 == line->yf)
+			return (1);
+	}
+	else if (line->yo == line->yf)
+	{
+		if (line->xo + 1 == line->xf)
+			return(1);
+		else if (line->xo - 1 == line->xf)
+			return (1);
+	}
+	else if (line->xo + 1)
 }*/
+
+void	bresenham_algorithm(t_data *data, t_line *line)
+{
+	int	a;
+	int	b;
+	int	p;
+
+	a = 2 * (line->yo - line->yf);
+	b = a - 2 * (line->xo - line->xf);
+	while (!is_consec(line->xo, line->xf) && !is_consec(line->yo, line->yf))
+	{
+		p = a - line->xo - line->xf;
+		if ((line->xo - line->xf) * (line->yo - line->yf) < 0)
+		{
+			if ((line->xo - line->xf) > (line->yo - line->yf) && p < 0)
+				print_pixel(data, ++(line->xo), line->yo, color);
+			else
+				print_pixel(data, ++(line->xo), --(line->yo), color);
+		}
+		else if ((line->xo - line->xf) * (line->yo - line->yf) > 0)
+		{
+			if (p < 0)
+				print_pixel(data, ++(line->xo), line->yo, color);
+			else
+				print_pixel(data, ++(line->xo), --(line->yo), color);
+		}
+	}
+}
+
+void	print_line(t_data *data, t_line *line)
+{
+	if (line->xo == line->xf || line->yo == line->yf)
+		straight_line(data, line);
+	else if ((line->xo - line->xf) > (line->yo - line->yf))
+	{
+		
+	}
+}
+
+int	main(void)
+{
+	void		*mlx;
+	void		*mlx_win;
+	t_data		img;
+	t_square	square;
+
+	mlx = mlx_init();
+	mlx_win = mlx_new_window(mlx, 300, 300, "hellow");
+	img.img = mlx_new_image(mlx, 300, 300);
+	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_len, &img.endian);
+	square.x = 10;
+	square.y = 10;
+	square.dim = 10;
+	square.color = 0x00FF0000;
+	print_square(&img, &square);
+	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+	mlx_loop(mlx);
+}

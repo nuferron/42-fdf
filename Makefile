@@ -1,8 +1,8 @@
-SRCS =main.c	
+SRCS = main.c print_stuff.c
 OBJS = ${SRCS:.c=.o}
 
 NAME = fdf
-HEADER = fdf.h
+HEADERS = fdf.h
 CFLAGS = -Wall -Wextra -Werror
 BIN = fdf
 MLXHEADER = mlx.h
@@ -11,22 +11,27 @@ MLXFLAGS = -Lminilibx -lmlx -framework OpenGL -framework AppKit
 %.o: %.c
 	cc ${CFLAGS} -Imlx -c $< -o $@
 
-all: ${NAME}
+all: make_libs ${NAME}
+
+make_libs:
+	@make -C include/ft_printf/ --no-print-directory
 
 ${NAME}: ${OBJS}
-	cc ${OBJS} ${MLXFLAGS} -o ${NAME}
+	@cp include/ft_printf/libftprintf.a .
+	cc ${OBJS} ${MLXFLAGS} libftprintf.a  -o ${NAME}
 
 norm:
-	make -C inc/ft_printf norm --no-print-directory
-	norminette ${SRCS} ${SRCS_BNS} | grep -v "OK" | awk '{if($$2 == "Error!") \
+	@make -C include/ft_printf norm --no-print-directory
+	norminette ${SRCS} | grep -v "OK" | awk '{if($$2 == "Error!") \
 	print "\033[1;31;m"$$1" "$$2; else print "\033[0;m"$$0}'
 
 clean:
-	@rm -f ${OBJS} $ ${OBJS_BONUS}
+	rm -f ${OBJS} $ ${OBJS_BONUS}
+	@make -C include/ft_printf clean --no-print-directory
 
 fclean:	clean
-	@rm -f ${NAME}
-	rm -f ${BIN}
+	rm -f ${NAME} ${BIN} libftprintf.a
+	@make -C include/ft_printf fclean --no-print-directory
 
 re:	fclean all
 
