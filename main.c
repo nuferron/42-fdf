@@ -62,11 +62,11 @@ void	bresenham_algorithm(t_data *data, t_line *line)
 	int	b;
 	int	p;
 
-	a = 2 * (line->yo - line->yf);
-	b = a - 2 * (line->xo - line->xf);
+	//a = 2 * (line->yo - line->yf);
+	//b = a - 2 * (line->xo - line->xf);
 	while (!is_consec(line->xo, line->xf) && !is_consec(line->yo, line->yf))
 	{
-		p = a - line->xo - line->xf;
+		/*p = a - line->xo - line->xf;
 		if ((line->xo - line->xf) * (line->yo - line->yf) < 0)
 		{
 			if ((line->xo - line->xf) > (line->yo - line->yf) && p < 0)
@@ -80,8 +80,43 @@ void	bresenham_algorithm(t_data *data, t_line *line)
 				print_pixel(data, ++(line->xo), line->yo, color);
 			else
 				print_pixel(data, ++(line->xo), --(line->yo), color);
-		}
+		}*/
 	}
+}
+
+void bresenham(t_data *data, t_line *line)
+{
+	int a;
+	int b;
+	int p;
+
+	while (!is_consec(line->xo, line->xf) && !is_consec(line->yo, line->yf))
+	{
+	if ((line->xo - line->xf) > (line->yo - line->yf))
+	{
+		a = 2 * (line->yo - line->yf);
+		b = a - 2 * (line->xo - line->xf);
+		p = a - (line->xo - line->xf);
+		if(p < 0)
+			print_pixel(data, ++(line->xo), line->yo, color);
+		else if ((line->xo - line->xf) * (line->yo - line->yf) > 0)
+			print_pixel(data, ++(line->xo), ++(line->yo), color);
+		else if ((line->xo - line->xf) * (line->yo - line->yf) < 0)
+			print_pixel(data, ++(line->xo), --(line->yo), color);
+	}
+	 else if ((line->xo - line->xf) < (line->yo - line->yf))
+	 {
+		a = 2 * (line->xo - line->xf);
+		b = a - 2 * (line->yo - line->yf);
+		p = a - (line->yo - line->yf);
+		if(p < 0)
+			print_pixel(data, ++(line->xo), line->yo, color);
+		else if ((line->xo - line->xf) * (line->yo - line->yf) > 0)
+			print_pixel(data, ++(line->xo), ++(line->yo), color);
+		else if ((line->xo - line->xf) * (line->yo - line->yf) < 0)
+			print_pixel(data, ++(line->xo), --(line->yo), color);
+	 }
+	 }
 }
 
 void	print_line(t_data *data, t_line *line)
