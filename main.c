@@ -2,141 +2,18 @@
 #include <stdio.h>
 #include <math.h>
 
-void	straight_line(t_data *data, t_line *line)
-{
-	int	i;
-
-	i = 0;
-	if (line->xo != line->xf)
-	{
-		while (i < line->xf)
-		{
-			print_pixel(data, line->xo, line->yo, color);
-			(line->xo)++;
-			i++;
-		}
-	}
-	else
-	{
-		while (line->yo != line->yf)
-		{
-			print_pixel(data, line->xo, line->yo, color);
-			(line->yo)++;
-			i++;
-		}
-	}
-}
-
-int	is_consec(int num1, int num2)
-{
-	if (num1 + 1 == num2 || num1 - 1 == num2)
-		return (1);
-	else
-		return(0);
-}
-
-/*int	is_around(t_line *line)
-{
-	if (line->xo == line->xf && line->yo == line->yf)
-		return (0);
-	if (is_consec(line->xo, line->xf) && is_consec(line->yo, line->yf))
-	{
-		if (line->yo + 1 == line->yf)
-			return (1);
-		else if (line->yo - 1 == line->yf)
-			return (1);
-	}
-	else if (line->yo == line->yf)
-	{
-		if (line->xo + 1 == line->xf)
-			return(1);
-		else if (line->xo - 1 == line->xf)
-			return (1);
-	}
-	else if (line->xo + 1)
-}*/
-
-void	bresenham_algorithm(t_data *data, t_line *line)
-{
-	int	a;
-	int	b;
-	int	p;
-
-	//a = 2 * (line->yo - line->yf);
-	//b = a - 2 * (line->xo - line->xf);
-	while (!is_consec(line->xo, line->xf) && !is_consec(line->yo, line->yf))
-	{
-		/*p = a - line->xo - line->xf;
-		if ((line->xo - line->xf) * (line->yo - line->yf) < 0)
-		{
-			if ((line->xo - line->xf) > (line->yo - line->yf) && p < 0)
-				print_pixel(data, ++(line->xo), line->yo, color);
-			else
-				print_pixel(data, ++(line->xo), --(line->yo), color);
-		}
-		else if ((line->xo - line->xf) * (line->yo - line->yf) > 0)
-		{
-			if (p < 0)
-				print_pixel(data, ++(line->xo), line->yo, color);
-			else
-				print_pixel(data, ++(line->xo), --(line->yo), color);
-		}*/
-	}
-}
-
-void bresenham(t_data *data, t_line *line)
-{
-	int a;
-	int b;
-	int p;
-
-	while (!is_consec(line->xo, line->xf) && !is_consec(line->yo, line->yf))
-	{
-	if ((line->xo - line->xf) > (line->yo - line->yf))
-	{
-		a = 2 * (line->yo - line->yf);
-		b = a - 2 * (line->xo - line->xf);
-		p = a - (line->xo - line->xf);
-		if(p < 0)
-			print_pixel(data, ++(line->xo), line->yo, color);
-		else if ((line->xo - line->xf) * (line->yo - line->yf) > 0)
-			print_pixel(data, ++(line->xo), ++(line->yo), color);
-		else if ((line->xo - line->xf) * (line->yo - line->yf) < 0)
-			print_pixel(data, ++(line->xo), --(line->yo), color);
-	}
-	 else if ((line->xo - line->xf) < (line->yo - line->yf))
-	 {
-		a = 2 * (line->xo - line->xf);
-		b = a - 2 * (line->yo - line->yf);
-		p = a - (line->yo - line->yf);
-		if(p < 0)
-			print_pixel(data, ++(line->xo), line->yo, color);
-		else if ((line->xo - line->xf) * (line->yo - line->yf) > 0)
-			print_pixel(data, ++(line->xo), ++(line->yo), color);
-		else if ((line->xo - line->xf) * (line->yo - line->yf) < 0)
-			print_pixel(data, ++(line->xo), --(line->yo), color);
-	 }
-	 }
-}
-
-void	print_line(t_data *data, t_line *line)
-{
-	if (line->xo == line->xf || line->yo == line->yf)
-		straight_line(data, line);
-	else if ((line->xo - line->xf) > (line->yo - line->yf))
-	{
-		
-	}
-}
-
-int	main(void)
+int	main(int argc, char **argv)
 {
 	void		*mlx;
 	void		*mlx_win;
 	t_data		img;
 	t_square	square;
+	t_point		origin;
+	t_point		final;
 
 	mlx = mlx_init();
+	if (argc != 5)
+		return (ft_printf("Invalid number of arguments"));
 	mlx_win = mlx_new_window(mlx, 300, 300, "hellow");
 	img.img = mlx_new_image(mlx, 300, 300);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_len, &img.endian);
@@ -145,6 +22,18 @@ int	main(void)
 	square.dim = 10;
 	square.color = 0x00FF0000;
 	print_square(&img, &square);
+	origin.x = atoi(argv[1]);
+	origin.y = atoi(argv[2]);
+	final.x = atoi(argv[3]);
+	final.y = atoi(argv[4]);
+	origin.color = 0x00FF0000;
+	final.color = 0x00FF0000;
+	printf("origin:\tx= %f\ty= %f\nfinal:\tx= %f\ty= %f\n\n", origin.x, origin.y, final.x, final.y);
+	print_line(&img, origin, final);
+	print_pixel(&img, origin.x, origin.y, 0x0000FF00);
+	print_pixel(&img, final.x, final.y, 0x0000FF00);
+	//print_pixel(&img, 150, 150, 0x0000FF00);
+	//print_pixel(&img, 150, 200, 0x0000FF00);
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }

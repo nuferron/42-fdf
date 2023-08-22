@@ -1,4 +1,5 @@
-SRCS = main.c print_stuff.c
+SRCS = main.c print_stuff.c print_line.c
+
 OBJS = ${SRCS:.c=.o}
 
 NAME = fdf

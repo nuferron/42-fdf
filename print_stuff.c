@@ -4,6 +4,7 @@ void	print_pixel(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
+	//printf("pixel x: %d\ty: %d\n", x, y);
 	dst = data->addr + (y * data->line_len + x * (data->bpp / 8));
 	*(unsigned int *)dst = color;
 }

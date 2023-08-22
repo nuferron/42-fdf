@@ -26,14 +26,25 @@ typedef struct	s_square
 
 typedef struct	s_line
 {
-	int	xo;
-	int	yo;
-	int	xf;
-	int	yf;
-	int	color;
+	float	xo;
+	float	yo;
+	float	xf;
+	float	yf;
+	float	bresen_a;
+	float	bresen_b;
+	float	bresen_p;
+	int		color;
 }				t_line;
+
+typedef struct	s_point
+{
+	float	x;
+	float	y;
+	int		color;
+}				t_point;
 
 void	print_pixel(t_data *data, int x, int y, int color);
 void	print_square(t_data *data, t_square *square);
+void	print_line(t_data *data, t_point origin, t_point fin);
 
 #endif
