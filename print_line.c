@@ -24,20 +24,33 @@ void	print_line(t_data *data, t_point origin, t_point final)
 	dy = final.y - origin.y;
 	dx = final.x - origin.x;
 	m = dy / dx;
+	printf("m = %f\n", m);
 	if (dx == 0)
+	{
+		printf("dx = 0\n");
 		while (origin.y <= final.y)
 			print_pixel(data, origin.x, origin.y++, origin.color);
+	}
 	else if (dy == 0)
+	{
+		printf("dy = 0\n");
 		while (origin.x <= final.x)
 			print_pixel(data, origin.x++, origin.y, origin.color);
+	}
 	else if (m == 1)
+	{
+		printf("m = 1\n");
 		while (origin.x <= final.x && origin.y <= final.y)
 			print_pixel(data, origin.x++, origin.y++, origin.color);
+	}
 	else if (m < 1 && m > -1)
 	{
-		acc = m;
+		printf("m < +- 1\n");
+		acc = fabsf(m);
+		printf("origin x %f\ty %f\nfinal x %f\ty %f\n", origin.x, origin.y, final.x, final.y);
 		while (origin.x <= final.x && origin.y <= final.y)
 		{
+			printf("acc = %f\n", acc);
 			if (acc < 1)
 				print_pixel(data, origin.x++, origin.y, origin.color);
 			else
@@ -45,16 +58,20 @@ void	print_line(t_data *data, t_point origin, t_point final)
 				acc--;
 				print_pixel(data, origin.x++, origin.y++, origin.color);
 			}
-			acc += m;
+			acc += fabsf(m);
 		}
 	}
 	else if (m > 1 || m < -1)
 	{
+		printf("m > +- 1\n");	
 		acc = 1 / m;
 		while (origin.x <= final.x && origin.y <= final.y)
 		{
+			printf("acc = %f\n", acc);
 			if (acc < 1)
+			{
 				print_pixel(data, origin.x, origin.y++, origin.color);
+			}
 			else
 			{
 				acc--;
@@ -63,4 +80,5 @@ void	print_line(t_data *data, t_point origin, t_point final)
 			acc += 1 / m;
 		}
 	}
+	printf("end\n");
 }
