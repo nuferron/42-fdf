@@ -32,8 +32,17 @@ int	main(int argc, char **argv)
 	print_line(&img, origin, final);
 	print_pixel(&img, origin.x, origin.y, 0x0000FF00);
 	print_pixel(&img, final.x, final.y, 0x0000FF00);
-	//print_pixel(&img, 150, 150, 0x0000FF00);
-	//print_pixel(&img, 150, 200, 0x0000FF00);
+	/*origin.x = atoi(argv[1]);
+	origin.y = atoi(argv[2]);
+	final.x = atoi(argv[5]);
+	final.y = atoi(argv[6]);
+	//origin.x = atoi(argv[5]);
+	//origin.y = atoi(argv[6]);
+	//final.x = atoi(argv[7]);
+	//final.y = atoi(argv[8]);
+	origin.color = 0x000000FF;
+	final.color = 0x000000FF;
+	print_line(&img, origin, final);*/
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
