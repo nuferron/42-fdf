@@ -26,6 +26,8 @@ float	ft_truncate(float num)
 	return (i);
 }
 
+float	ft_mod(float x, float)
+
 void	print_line(t_data *data, t_point origin, t_point final)
 {
 	float	dy;
