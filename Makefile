@@ -4,7 +4,7 @@ OBJS = ${SRCS:.c=.o}
 
 NAME = fdf
 HEADERS = fdf.h
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3
 BIN = fdf
 MLXHEADER = mlx.h
 MLXFLAGS = -Lminilibx -lmlx -framework OpenGL -framework AppKit
