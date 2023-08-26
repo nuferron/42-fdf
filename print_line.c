@@ -49,6 +49,21 @@ void	straight_line(t_data *data, t_point origin, t_point final)
 			print_pixel(data, origin.x++, origin.y, origin.color);
 }
 
+void	slope_one(t_data *data, t_point origin, t_point final)
+{
+	float	dx;
+	float	dy;
+
+	dx = final.x - origin.x;
+	dy = final.y - origin.y;
+		while (origin.x != final.x && origin.y != final.y)
+		{
+			print_pixel(data, origin.x, origin.y, origin.color);
+			origin.y += dy / fabsf(dy);
+			origin.x += dx / fabsf(dx);
+		}
+}
+
 void	print_line(t_data *data, t_point origin, t_point final)
 {
 	float	dx;
@@ -69,12 +84,13 @@ void	print_line(t_data *data, t_point origin, t_point final)
 		straight_line(data, origin, final);
 	else if (m == 1 || m == -1)
 	{
-		while (origin.x != final.x && origin.y != final.y)
+		slope_one(data, origin, final);
+		/*while (origin.x != final.x && origin.y != final.y)
 		{
 			printf("origin x %f\ty %f\nfinal x %f\ty %f\n\n", origin.x, origin.y, final.x, final.y);
 			print_pixel(data, origin.x++, origin.y, origin.color);
 			origin.y += m;
-		}
+		}*/
 	}
 	else if (m < 1 && m > -1)
 	{
@@ -122,4 +138,5 @@ void	print_line(t_data *data, t_point origin, t_point final)
 			acc += 1 / m;
 		}
 	}
+	printf("m = %f\n", m);
 }
