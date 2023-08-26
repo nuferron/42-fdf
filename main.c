@@ -14,8 +14,8 @@ int	main(int argc, char **argv)
 	mlx = mlx_init();
 	if (argc != 5)
 		return (ft_printf("Invalid number of arguments"));
-	mlx_win = mlx_new_window(mlx, 300, 300, "hellow");
-	img.img = mlx_new_image(mlx, 300, 300);
+	mlx_win = mlx_new_window(mlx, 1300, 1300, "hellow");
+	img.img = mlx_new_image(mlx, 1300, 1300);
 	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_len, &img.endian);
 	square.x = 10;
 	square.y = 10;
