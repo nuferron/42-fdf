@@ -4,45 +4,24 @@
 
 int	main(int argc, char **argv)
 {
-	void		*mlx;
-	void		*mlx_win;
-	t_data		img;
-	t_square	square;
-	t_point		origin;
-	t_point		final;
+	t_data	win;
+	t_point	origin;
+	t_point	final;
 
-	mlx = mlx_init();
+	win.mlx = mlx_init();
 	if (argc != 5)
 		return (ft_printf("Invalid number of arguments"));
-	mlx_win = mlx_new_window(mlx, 1300, 1300, "hellow");
-	img.img = mlx_new_image(mlx, 1300, 1300);
-	img.addr = mlx_get_data_addr(img.img, &img.bpp, &img.line_len, &img.endian);
-	square.x = 10;
-	square.y = 10;
-	square.dim = 10;
-	square.color = 0x00FF0000;
-	print_square(&img, &square);
+	win.mlx_win = mlx_new_window(win.mlx, 1300, 1300, "xchtrb");
+	win.img = mlx_new_image(win.mlx, 1300, 1300);
+	win.addr = mlx_get_data_addr(win.img, &win.bpp, &win.line_len, &win.endian);
 	origin.x = atoi(argv[1]);
 	origin.y = atoi(argv[2]);
 	final.x = atoi(argv[3]);
 	final.y = atoi(argv[4]);
-	origin.color = 0x00FF0000;
-	final.color = 0x00FF0000;
-	printf("origin:\tx= %f\ty= %f\nfinal:\tx= %f\ty= %f\n\n", origin.x, origin.y, final.x, final.y);
-	print_line(&img, origin, final);
-	print_pixel(&img, origin.x, origin.y, 0x0000FF00);
-	print_pixel(&img, final.x, final.y, 0x0000FF00);
-	/*origin.x = atoi(argv[1]);
-	origin.y = atoi(argv[2]);
-	final.x = atoi(argv[5]);
-	final.y = atoi(argv[6]);
-	//origin.x = atoi(argv[5]);
-	//origin.y = atoi(argv[6]);
-	//final.x = atoi(argv[7]);
-	//final.y = atoi(argv[8]);
-	origin.color = 0x000000FF;
-	final.color = 0x000000FF;
-	print_line(&img, origin, final);*/
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
+	//origin.color = trgb_to_hex(atoi(argv[5]), atoi(argv[6]), atoi(argv[7]), atoi(argv[8]));
+	print_line(&win, &origin, &final);
+	//print_pixel(&win, atoi(argv[1]), atoi(argv[2]), 0x00FF00);
+	//print_pixel(&win, atoi(argv[3]), atoi(argv[4]), 0x00FF00);
+	mlx_put_image_to_window(win.mlx, win.mlx_win, win.img, 0, 0);
+	mlx_loop(win.mlx);
 }
