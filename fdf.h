@@ -56,5 +56,6 @@ void			print_line(t_data *data, t_point *origin, t_point *fin);
 float			ft_abs(float num);
 float			getting_float(float num);
 int				ft_round(float num);
+unsigned int color(t_data *data, int t, int r, int g, int b);
 
 #endif
