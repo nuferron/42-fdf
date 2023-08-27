@@ -41,8 +41,7 @@ typedef struct	s_xiaolin
 {
 	float	x1;
 	float	x2;
-	float	y1;
-	float	y2;
+	float	y;
 	float	xend;
 	float	yend;
 	float	xgap;
@@ -50,9 +49,12 @@ typedef struct	s_xiaolin
 	float	intery;
 }				t_xiaolin;
 
-void	print_pixel(t_data *data, int x, int y, int color);
+void			print_pixel(t_data *data, int x, int y, int color);
 unsigned int	trgb_to_hex(int t, int r, int g, int b);
-void	print_square(t_data *data, t_square *square);
-void	print_line(t_data *data, t_point *origin, t_point *fin);
+void			print_square(t_data *data, t_square *square);
+void			print_line(t_data *data, t_point *origin, t_point *fin);
+float			ft_abs(float num);
+float			getting_float(float num);
+int				ft_round(float num);
 
 #endif
