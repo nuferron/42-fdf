@@ -1,28 +1,9 @@
 #include "fdf.h"
 
-float	ft_abs(float num)
-{
-	if (num < 0)
-		num = -num;
-	return (num);
-}
-
-float	getting_float(float	num)
-{
-	return (num - (int)num);
-}
-
-int	ft_round(float num)
-{
-	if (getting_float(num) >= 0.5)
-		return ((int)num + 0.5);
-	return ((int)num);
-}
-
 void	swap_coord(t_point *origin, t_point *final, int diff)
 {
 	t_point	tmp;
-	
+
 	if (diff)
 	{
 		tmp = *origin;
@@ -42,6 +23,67 @@ void	swap_coord(t_point *origin, t_point *final, int diff)
 	}
 }
 
+void	initialize_wu(t_xiaolin *wu, t_point point, int num)
+{
+	wu->xend = ft_round(point.x);
+	if (num == 1)
+	{
+		wu->yend = (int)point.y + wu->gradient * (wu->xend - point.x);
+		wu->xgap = 1 - getting_float(point.x + 0.5);
+		wu->x1 = wu->xend;
+	}
+	else
+	{
+		wu->intery = wu->yend + wu->gradient;
+		wu->yend = point.y + wu->gradient * (wu->xend - point.x);
+		wu->xgap = getting_float(point.x + 0.5);
+		wu->x2 = wu->xend;
+	}
+	wu->y = (int)wu->yend;
+}
+
+void	print_extremes(t_data *data, t_xiaolin wu, int diff, int num)
+{
+	float	var;
+
+	if (num == 1)
+		var = wu.x1;
+	else
+		var = wu.x2;
+	if (diff)
+	{
+		print_pixel(data, wu.y, var, 0xFF0000);
+		print_pixel(data, wu.y + 1, var, 0x0000FF);
+	}
+	else
+	{
+		print_pixel(data, var, wu.y, 0xFF0000);
+		print_pixel(data, var + 1, wu.y, 0x0000FF);
+	}
+}
+
+void	print_in_between(t_data *data, t_xiaolin wu, int diff)
+{
+	if (diff)
+	{
+		while (wu.x1 < wu.x2)
+		{
+			print_pixel(data, wu.intery, wu.x1, 0xFF0000);
+			print_pixel(data, wu.intery + 1, wu.x1++, 0x0000FF);
+			wu.intery += wu.gradient;
+		}
+	}
+	else
+	{
+		while (wu.x1 < wu.x2)
+		{
+			print_pixel(data, wu.x1, wu.intery, 0xFF0000);
+			print_pixel(data, wu.x1++, wu.intery + 1, 0x0000FF);
+			wu.intery += wu.gradient;
+		}
+	}
+}
+
 void	print_line(t_data *data, t_point *origin, t_point *final)
 {
 	float		dx;
@@ -57,58 +99,10 @@ void	print_line(t_data *data, t_point *origin, t_point *final)
 		wu.gradient = 1;
 	else
 		wu.gradient = dy / dx;
-	/////////////////////////////////
-	wu.xend = ft_round(origin->x);
-	wu.yend = (int)origin->y + wu.gradient * (wu.xend - origin->x);
-	wu.xgap = 1 - getting_float(origin->x + 0.5);
-	wu.x1 = wu.xend;
-	wu.y1 = (int)wu.yend;
-	if (diff)
-	{
-		print_pixel(data, wu.y1, wu.x1, 0xFF0000);
-		print_pixel(data, wu.y1 + 1, wu.x1, 0x0000FF);
-	}
-	else
-	{
-		print_pixel(data, wu.x1, wu.y1, 0xFF0000);
-		print_pixel(data, wu.x1 + 1, wu.y1, 0x0000FF);
-	}
-	////////////////////////////
-	wu.intery = wu.yend + wu.gradient;
-	wu.xend = ft_round(final->x);
-	wu.yend = final->y + wu.gradient * (wu.xend - final->x);
-	wu.xgap = getting_float(final->x + 0.5);
-	wu.x2 = wu.xend;
-	wu.y2 = (int)wu.yend;
-	if (diff)
-	{
-		print_pixel(data, wu.y2, wu.x2, 0xFF0000);
-		print_pixel(data, wu.y2 + 1, wu.x2, 0x0000FF);
-	}
-	else
-	{
-		print_pixel(data, wu.x2, wu.y2, 0xFF0000);
-		print_pixel(data, wu.x2 + 1, wu.y2, 0x0000FF);
-	}
-
-	///////////////////////////////////
+	initialize_wu(&wu, *origin, 1);
+	print_extremes(data, wu, diff, 1);
+	initialize_wu(&wu, *final, 2);
+	print_extremes(data, wu, diff, 2);
 	wu.x1++;
-	if (diff)
-	{
-		while (wu.x1 < wu.x2)
-		{
-			print_pixel(data, wu.intery, wu.x1, 0xFF0000);
-			print_pixel(data, wu.intery + 1, wu.x1++, 0x0000FF);
-			wu.intery += wu.gradient;
-		}
-	}
-	else
-	{
-		while (wu.x1 < wu.x2)
-		{
-			print_pixel(data, wu.x1,  wu.intery, 0xFF0000);
-			print_pixel(data, wu.x1++, wu.intery + 1, 0x0000FF);
-			wu.intery += wu.gradient;
-		}
-	}
+	print_in_between(data, wu, diff);
 }
