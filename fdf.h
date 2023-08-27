@@ -9,6 +9,8 @@
 
 typedef struct	s_data
 {
+	void	*mlx;
+	void	*mlx_win;
 	void	*img;
 	char	*addr;
 	int		bpp;
@@ -24,27 +26,33 @@ typedef struct	s_square
 	int	color;
 }				t_square;
 
-typedef struct	s_line
-{
-	float	xo;
-	float	yo;
-	float	xf;
-	float	yf;
-	float	bresen_a;
-	float	bresen_b;
-	float	bresen_p;
-	int		color;
-}				t_line;
-
 typedef struct	s_point
 {
 	float	x;
 	float	y;
+	float	t;
+	float	r;
+	float	g;
+	float	b;
 	int		color;
 }				t_point;
 
+typedef struct	s_xiaolin
+{
+	float	x1;
+	float	x2;
+	float	y1;
+	float	y2;
+	float	xend;
+	float	yend;
+	float	xgap;
+	float	gradient;
+	float	intery;
+}				t_xiaolin;
+
 void	print_pixel(t_data *data, int x, int y, int color);
+unsigned int	trgb_to_hex(int t, int r, int g, int b);
 void	print_square(t_data *data, t_square *square);
-void	print_line(t_data *data, t_point origin, t_point fin);
+void	print_line(t_data *data, t_point *origin, t_point *fin);
 
 #endif
