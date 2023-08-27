@@ -1,10 +1,10 @@
-SRCS = main.c print_stuff.c print_line.c
+SRCS = main.c print_stuff.c xiaolin_alg.c #print_line.c
 
 OBJS = ${SRCS:.c=.o}
 
 NAME = fdf
 HEADERS = fdf.h
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address
 BIN = fdf
 MLXHEADER = mlx.h
 MLXFLAGS = -Lminilibx -lmlx -framework OpenGL -framework AppKit
