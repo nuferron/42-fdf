@@ -18,10 +18,9 @@ int	main(int argc, char **argv)
 	origin.y = atoi(argv[2]);
 	final.x = atoi(argv[3]);
 	final.y = atoi(argv[4]);
-	//origin.color = trgb_to_hex(atoi(argv[5]), atoi(argv[6]), atoi(argv[7]), atoi(argv[8]));
-	print_line(&win, &origin, &final);
-	//print_pixel(&win, atoi(argv[1]), atoi(argv[2]), 0x00FF00);
-	//print_pixel(&win, atoi(argv[3]), atoi(argv[4]), 0x00FF00);
+	//print_line(&win, &origin, &final);
+	color(&win, 0, 255, 255, 0);
+	print_pixel(&win, 499, 499, 0x00FF00);
 	mlx_put_image_to_window(win.mlx, win.mlx_win, win.img, 0, 0);
 	mlx_loop(win.mlx);
 }
