@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:57:06 by nuferron          #+#    #+#             */
-/*   Updated: 2023/02/21 21:18:27 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:49:23 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int	ft_wordcount(const char *s, char c)
 
 	i = 0;
 	counter = 0;
+	if (!s)
+		return (-2);
 	while (s[i] != '\0')
 	{
 		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))

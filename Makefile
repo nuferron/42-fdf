@@ -1,4 +1,4 @@
-SRCS = main.c print_stuff.c xiaolin_alg.c #print_line.c
+SRCS = main.c print_stuff.c xiaolin_alg.c maths.c errors.c read_map.c
 
 OBJS = ${SRCS:.c=.o}
 

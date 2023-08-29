@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:22:33 by nuferron          #+#    #+#             */
-/*   Updated: 2023/02/03 20:26:16 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:50:20 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s1)
 	char	*ptr;
 	int		len;
 
+	if (!s1)
+		return (NULL);
 	len = ft_strlen((char *)s1) + 1;
 	ptr = (char *) malloc(len * sizeof (char));
 	if (ptr == NULL)
