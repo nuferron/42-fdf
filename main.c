@@ -9,7 +9,7 @@ int	close_win(t_data *data)
 	exit(EXIT_SUCCESS);
 }
 
-int	main(int argc, char **argv)
+/*int	main(int argc, char **argv)
 {
 	t_data	win;
 	t_point	origin;
@@ -32,9 +32,9 @@ int	main(int argc, char **argv)
 	mlx_put_image_to_window(win.mlx, win.mlx_win, win.img, 0, 0);
 	mlx_hook(win.mlx_win, 17, 1L<<0, close_win, &win);
 	mlx_loop(win.mlx);
-}
+}*/
 
-/*int	main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	data;
 	int		fd;
@@ -50,4 +50,4 @@ int	main(int argc, char **argv)
 	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img, 0, 0);
 	mlx_hook(data.mlx_win, 17, 1L<<0, close_win, &data);
 	mlx_loop(data.mlx);
-}*/
+}
