@@ -35,6 +35,57 @@ int	find_sep(char *str, char c)
 void	read_map(int fd, t_data *data)
 {
 	char	*line;
+	char	**points_lst;
+	char	**color;
+	int		x;
+	int		y;
+	t_point	*point;
+
+	y = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		points_lst = ft_split(line, ' ');
+		if (!points_lst)
+		{
+			//free them all
+			ft_printf("Uh-oh split error\n");
+		}
+		x = 0;
+		while (points_lst[x][0] != '\0' && points_lst[x][0] != '\n')
+		{
+			point = (t_point *)malloc(sizeof (t_point));
+			if (!point)
+			{
+				//free them all
+				ft_printf("Uh-oh malloc error\n");
+				exit(-1);
+			}
+			point->x = x;
+			point->y = y;
+			point->z = ft_atoi(points_lst[x]);
+			color = ft_split(points_lst[x]);
+			if (!color)
+			{
+				//free them all
+				ft_printf("Uh-oh malloc error\n");
+			}
+			if (color[1] != NULL)
+				point->color = getting_color(color[1]);
+			else
+				point->color = 0xFF0000;
+			x++;
+		}
+		y++;
+	}
+	//si el nombre de files son les que haurien de ser, ok si 
+}
+
+void	read_map(int fd, t_data *data)
+{
+	char	*line;
 	char	**points;
 	char	**color;
 	//t_point	**map;
@@ -62,15 +113,22 @@ void	read_map(int fd, t_data *data)
 	point->y = 0;
 	point->z = ft_atoi(points[0]);
 
-	color = ft_split(points[0], ',');
+	/*color = ft_split(points[0], ',');
 	if (!color)
 	{
 		//free them all
 		ft_printf("Uh-oh malloc error\n");
 		exit(-1);
-	}
+	}*/
 	color_sep = find_sep(points[0], ',');
 	printf("hi ha coma? %d\ncolor: %s\n", color_sep, points[0]);
+	color = ft_split(points[0], ',');
+	if (color[1] != NULL)
+	{
+		printf("Color specified\n");
+	}
+	else
+		printf("No color specified\n");
 	if (color_sep != -1)
 	{
 		color = ft_split(points[0], ',');
@@ -80,10 +138,10 @@ void	read_map(int fd, t_data *data)
 			ft_printf("Uh-oh malloc error\n");
 			exit(-1);
 		}
-		point->color = (unsigned int)&color[1][color_sep];
+		point->color = getting_color(color[1]);
 	}
 	else
 		point->color = 0xFF0000;
 	print_pixel(data, 300, 300, point->color);
-	printf("x %f\t y %f\tz %f\ncolor %d\n", point->x, point->y, point->z, point->color);
+	printf("x %f\t y %f\tz %f\ncolor %X\n", point->x, point->y, point->z, point->color);
 }
