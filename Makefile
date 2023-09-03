@@ -1,9 +1,10 @@
-SRCS = main.c print_stuff.c xiaolin_alg.c maths.c errors.c read_map.c colors.c
+SRCS =	main.c print_stuff.c xiaolin_alg.c maths.c colors.c errors.c \
+		#read_map.c colors.c
 
 OBJS = ${SRCS:.c=.o}
 
 NAME = fdf
-HEADERS = fdf.h
+HEADER = fdf.h
 CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address
 BIN = fdf
 MLXHEADER = mlx.h
@@ -17,9 +18,9 @@ all: make_libs ${NAME}
 make_libs:
 	@make -C include/ft_printf/ --no-print-directory
 
-${NAME}: ${OBJS}
+${NAME}: ${OBJS} ${HEADER}
 	@cp include/ft_printf/libftprintf.a .
-	cc ${OBJS} ${MLXFLAGS} libftprintf.a  -o ${NAME}
+	cc ${CFLAGS} ${OBJS} ${MLXFLAGS} libftprintf.a -o ${NAME}
 
 norm:
 	@make -C include/ft_printf norm --no-print-directory
@@ -27,7 +28,7 @@ norm:
 	print "\033[1;31;m"$$1" "$$2; else print "\033[0;m"$$0}'
 
 clean:
-	rm -f ${OBJS} $ ${OBJS_BONUS}
+	rm -f ${OBJS} ${OBJS_BONUS}
 	@make -C include/ft_printf clean --no-print-directory
 
 fclean:	clean
