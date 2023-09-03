@@ -84,25 +84,35 @@ void	print_in_between(t_data *data, t_xiaolin wu, int diff)
 	}
 }
 
-void	print_line(t_data *data, t_point *origin, t_point *final)
+void	xiaolin_ft(t_data *data, t_point origin, t_point final, t_xiaolin wu)
+{
+	initialize_wu(&wu, origin, 1);
+	print_extremes(data, wu, wu.diff, 1);
+	initialize_wu(&wu, final, 2);
+	print_extremes(data, wu, wu.diff, 2);
+	wu.x1++;
+	print_in_between(data, wu, wu.diff);
+}
+
+void	print_line(t_data *data, t_point origin, t_point final)
 {
 	float		dx;
 	float		dy;
-	int			diff;
 	t_xiaolin	wu;
 
-	diff = ft_abs(final->y - origin->y) > ft_abs(final->x - origin->x);
-	swap_coord(origin, final, diff);
-	dx = final->x - origin->x;
-	dy = final->y - origin->y;
+	wu.diff = ft_abs(final.y - origin.y) > ft_abs(final.x - origin.x);
+	swap_coord(&origin, &final, wu.diff);
+	dx = final.x - origin.x;
+	dy = final.y - origin.y;
 	if (dx == 0)
 		wu.gradient = 1;
 	else
 		wu.gradient = dy / dx;
-	initialize_wu(&wu, *origin, 1);
+	/*initialize_wu(&wu, origin, 1);
 	print_extremes(data, wu, diff, 1);
-	initialize_wu(&wu, *final, 2);
+	initialize_wu(&wu, final, 2);
 	print_extremes(data, wu, diff, 2);
 	wu.x1++;
-	print_in_between(data, wu, diff);
+	print_in_between(data, wu, diff);*/
+	xiaolin_ft(data, origin, final, wu);
 }
