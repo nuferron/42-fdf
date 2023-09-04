@@ -79,7 +79,6 @@ t_point	*create_cube(t_data data)
 	return (map);
 }
 
-
 /*int	close_win(t_data *data)
 {
 	if (data)
@@ -199,7 +198,7 @@ int	read_mouse(int zoom, int m_x, int m_y, t_structs *all)
 {
 	int	i = 0;
 	m_x = 0;
-	m_y = 2;
+	m_y = 0;
 	if (zoom == SCROLL_UP)
 	{
 		while (i < 8)
@@ -225,7 +224,6 @@ int	read_mouse(int zoom, int m_x, int m_y, t_structs *all)
 int	read_keys(int key, t_structs *all)
 {
 
-	printf("read_keys %p\n", all);
 	if (key == ESC || key == Q)
 		close_win(all->data);
 	else if (key == RIGHT || key == LEFT || key == UP || key == DOWN)
@@ -247,8 +245,8 @@ int	main(void)
 	t_structs	all;
 
 	data.mlx = mlx_init();
-	data.mlx_win = mlx_new_window(data.mlx, WIN_MAX, WIN_MAX, "Proves");
-	data.img = mlx_new_image(data.mlx, WIN_MAX, WIN_MAX);
+	data.mlx_win = mlx_new_window(data.mlx, MAX_X, MAX_Y, "Proves");
+	data.img = mlx_new_image(data.mlx, MAX_X, MAX_Y);
 	data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.line_len, &data.endian);
 
 	map = create_cube(data);
@@ -258,7 +256,7 @@ int	main(void)
 	all.point = map;
 	//printf("x %f\ty %f\tz %f\n%p\n", all.point[0].x, all.point[0].y, all.point[0].z, &all);
 	mlx_hook(data.mlx_win, 17, 0, close_win, &data);
-	mlx_hook(data.mlx_win, 6, 0, tutorial, &all);
+	//mlx_hook(data.mlx_win, 6, 0, tutorial, &all);
 	mlx_hook(data.mlx_win, 2, 0, read_keys, &all);
 	mlx_hook(data.mlx_win, 4, 0, read_mouse, &all);
 	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img, 0, 0);

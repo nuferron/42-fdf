@@ -1,7 +1,8 @@
 #ifndef MACROS_H
 # define MACROS_H
 
-# define WIN_MAX		1300
+# define MAX_X			1300
+# define MAX_Y			1300
 # define ESC			53
 # define LEFT			123
 # define RIGHT			124

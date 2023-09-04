@@ -8,18 +8,16 @@ void	print_pixel(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if (x < 0 || x > WIN_MAX)
+	if (x < 0 || x >= MAX_X)
 	{
-		printf("x error %d\n", x);
+		//printf("x error %d\n", x);
 		return ;
 	}
-	if (y < 0 || y > WIN_MAX)
+	if (y < 0 || y >= MAX_Y)
 	{
-		printf("y error %d\n", y);
+		//printf("y error %d\n", y);
 		return ;
 	}
 	dst = data->addr + (y * data->line_len + x * (data->bpp / 8));
 	*(unsigned int *)dst = color;
 }
-
-//void	where_to_print(int x, int y)
