@@ -86,7 +86,6 @@ void	print_in_between(t_data *data, t_xiaolin wu, int diff)
 
 void	xiaolin_ft(t_data *data, t_point origin, t_point final, t_xiaolin wu)
 {
-	//printf("ox = %f\toy = %f\nfx = %f\tfy = %f\n", origin.x, origin.y, final.x, final.y);
 	initialize_wu(&wu, origin, 1);
 	print_extremes(data, &wu, wu.diff, 1);
 	initialize_wu(&wu, final, 2);
@@ -95,12 +94,29 @@ void	xiaolin_ft(t_data *data, t_point origin, t_point final, t_xiaolin wu)
 	print_in_between(data, wu, wu.diff);
 }
 
-void	print_line(t_data *data, t_point origin, t_point final)
+void	transformation(t_point *origin, t_point *final, t_angle angle)
+{
+	if (origin->z != 0)
+	{
+		origin->x = origin->x + sin(angle.x) * origin->z;
+		origin->y = origin->y + sin(angle.y) * origin->z;
+	}
+	if (final->z != 0)
+	{
+		final->x = final->x + sin(angle.x) * final->z;
+		final->y = final->y + sin(angle.y) * final->z;
+	}
+}
+
+void	print_line(t_structs *all, t_point origin, t_point final)
 {
 	float		dx;
 	float		dy;
 	t_xiaolin	wu;
 
+	printf("ox %f\toy %f\toz %f\n", origin.x, origin.y, origin.z);
+	printf("fx %f\tfy %f\tfz %f\n", final.x, final.y, final.z);
+	transformation(&origin, &final, all->angle);
 	wu.diff = ft_abs(final.y - origin.y) > ft_abs(final.x - origin.x);
 	swap_coord(&origin, &final, wu.diff);
 	dx = final.x - origin.x;
@@ -109,5 +125,5 @@ void	print_line(t_data *data, t_point origin, t_point final)
 		wu.gradient = 1;
 	else
 		wu.gradient = dy / dx;
-	xiaolin_ft(data, origin, final, wu);
+	xiaolin_ft(all->data, origin, final, wu);
 }
