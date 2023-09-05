@@ -32,10 +32,11 @@ int	find_sep(char *str, char c)
 	return (pos);
 }
 
-void	read_map(int fd, t_data *data)
+void	read_map(int fd, t_structs *all)
 {
 	char	*line;
 	char	**points_lst;
+	t_point	**map;
 	char	**color;
 	int		x;
 	int		y;
@@ -44,9 +45,12 @@ void	read_map(int fd, t_data *data)
 	y = 0;
 	while (1)
 	{
+		printf("lectura %d\n", y);
 		line = get_next_line(fd);
+		printf("line = %s\n", line);
 		if (!line)
 			break ;
+		all->max_col = ft_strlen(line);
 		points_lst = ft_split(line, ' ');
 		if (!points_lst)
 		{
@@ -54,8 +58,9 @@ void	read_map(int fd, t_data *data)
 			ft_printf("Uh-oh split error\n");
 		}
 		x = 0;
-		while (points_lst[x][0] != '\0' && points_lst[x][0] != '\n')
+		while (points_lst[x][1] != '\0' && points_lst[x][1] != '\n')
 		{
+			printf("volta %d\n", x);
 			point = (t_point *)malloc(sizeof (t_point));
 			if (!point)
 			{
@@ -66,7 +71,8 @@ void	read_map(int fd, t_data *data)
 			point->x = x;
 			point->y = y;
 			point->z = ft_atoi(points_lst[x]);
-			color = ft_split(points_lst[x]);
+			color = ft_split(points_lst[x], ',');
+			printf("mitja marato\n");
 			if (!color)
 			{
 				//free them all
@@ -76,14 +82,30 @@ void	read_map(int fd, t_data *data)
 				point->color = getting_color(color[1]);
 			else
 				point->color = 0xFF0000;
+			printf("while %c\n", points_lst[x][0]);
+			map[y][x] = *point; // he de reservar memoria per map, pero encara no se quantes files tindre. Pero no passa res, perque puc reservar linies t_point * i despres a cada volta fer free + malloc o algo aixi
 			x++;
 		}
 		y++;
 	}
-	//si el nombre de files son les que haurien de ser, ok si 
+	//si el nombre de files son les que haurien de ser, ok si
+	all->max_row = y;
+	close(fd);
+	int i = 0;
+	int j;
+	while (i < all->max_row)
+	{
+		j = 0;
+		while (j < all->max_col)
+		{
+			printf("x %f\ty %f\tcolor %X\n", map[i][j].x, map[i][j].y, map[i][j].color);
+			j++;
+		}
+		i++;
+	}
 }
 
-void	read_map(int fd, t_data *data)
+/*void	read_map(int fd, t_data *data)
 {
 	char	*line;
 	char	**points;
@@ -113,13 +135,13 @@ void	read_map(int fd, t_data *data)
 	point->y = 0;
 	point->z = ft_atoi(points[0]);
 
-	/*color = ft_split(points[0], ',');
-	if (!color)
-	{
+	//color = ft_split(points[0], ',');
+//	if (!color)
+//	{
 		//free them all
-		ft_printf("Uh-oh malloc error\n");
-		exit(-1);
-	}*/
+//		ft_printf("Uh-oh malloc error\n");
+//		exit(-1);
+//	}
 	color_sep = find_sep(points[0], ',');
 	printf("hi ha coma? %d\ncolor: %s\n", color_sep, points[0]);
 	color = ft_split(points[0], ',');
@@ -144,4 +166,4 @@ void	read_map(int fd, t_data *data)
 		point->color = 0xFF0000;
 	print_pixel(data, 300, 300, point->color);
 	printf("x %f\t y %f\tz %f\ncolor %X\n", point->x, point->y, point->z, point->color);
-}
+}*/
