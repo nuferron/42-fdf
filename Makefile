@@ -1,11 +1,11 @@
-SRCS =	main.c print_stuff.c xiaolin_alg.c maths.c colors.c errors.c
-		#read_map.c colors.c
+SRCS =	main.c print_stuff.c xiaolin_alg.c maths.c colors.c errors.c \
+		movements.c tests.c read_map.c #colors.c
 
 OBJS = ${SRCS:.c=.o}
 
 NAME = fdf
 HEADER = fdf.h
-CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -O3 -fsanitize=address
 BIN = fdf
 MLXHEADER = mlx.h
 MLXFLAGS = -Lminilibx -lmlx -framework OpenGL -framework AppKit
