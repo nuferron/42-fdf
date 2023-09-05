@@ -11,5 +11,8 @@
 # define Q				12
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
-
+# define X				7
+# define Y				16
+# define Z				6
+# define PI				3.14159265359
 #endif
