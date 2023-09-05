@@ -9,13 +9,13 @@ int	file_type(char *path)
 	if (ft_strncmp(path + prot - 4, ".fdf\0", 4) != 0)
 	{
 		ft_printf("\033[1;31;mWrong type of file!\n\033[0;m");
-		exit(-1);
+		return (-1);
 	}
 	prot = open(path, O_RDONLY);
 	if (prot == -1)
 	{
 		ft_printf("\033[1;31;mUnable to open \"%s\"\n\033[0;m", path);
-		exit(-1);
+		return(-1);
 	}
 	return (prot);
 }
