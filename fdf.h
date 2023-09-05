@@ -52,24 +52,41 @@ typedef struct s_xiaolin
 	int		by;
 }				t_xiaolin;
 
+typedef struct s_angle
+{
+	float	x;
+	float	y;
+	float	z;
+}				t_angle;
+
 typedef struct s_structs
 {
 	t_data		*data;
 	t_point		*point;
 	t_xiaolin	wu;
+	int			max_col;
+	int			max_row;
+	t_angle		angle;
+	t_point		**map;
 }				t_structs;
 
 void			print_pixel(t_data *data, int x, int y, int color);
 unsigned int	trgb_to_hex(int t, int r, int g, int b);
 void			print_square(t_data *data, t_square *square);
-void			print_line(t_data *data, t_point origin, t_point final);
+void			print_line(t_structs *all, t_point origin, t_point final);
 float			ft_abs(float num);
 float			getting_float(float num);
 int				ft_round(float num);
 int				file_type(char *path);
 int				error_management(char *path);
-void			read_map(int fd, t_data *data);
+void			read_map(int fd, t_structs *all);
 unsigned int	getting_color(char *str);
-void			should_print(t_point *a, t_point *b);
+void			translation(t_structs *all, int key);
+void			rotation(t_structs *all, int key);
+void			update_cube(t_structs *all);
+t_point			*create_cube(t_structs *all);
+void			update_map(t_structs *all);
+t_point			**create_map(t_structs *all);
+void			go_black(t_data *data);
 
 #endif
