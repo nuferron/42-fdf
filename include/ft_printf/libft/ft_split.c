@@ -6,13 +6,13 @@
 /*   By: nuferron <nuferron@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 19:57:06 by nuferron          #+#    #+#             */
-/*   Updated: 2023/08/29 16:49:23 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:30:51 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_wordcount(const char *s, char c)
+int	ft_wordcount(const char *s, char c)
 {
 	int	i;
 	int	counter;

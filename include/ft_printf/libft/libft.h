@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 17:39:28 by nuferron          #+#    #+#             */
-/*   Updated: 2023/08/29 13:57:20 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/06 14:31:38 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ char	*reading_buffer(int fd, char *storage);
 char	*extract_line(char *storage);
 char	*cleaning_storage(char *storage);
 char	*get_next_line(int fd);
+int		ft_wordcount(const char *s, char c);
 
 #endif
