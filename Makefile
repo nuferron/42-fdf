@@ -1,5 +1,5 @@
 SRCS =	main.c print_stuff.c xiaolin_alg.c maths.c colors.c errors.c \
-		movements.c tests.c read_map.c #colors.c
+		movements.c tests.c read_map.c free_file.c#read2.c #colors.c
 
 OBJS = ${SRCS:.c=.o}
 
@@ -16,7 +16,7 @@ MLXFLAGS = -Lminilibx -lmlx -framework OpenGL -framework AppKit
 all: make_libs ${NAME}
 
 make_libs:
-	@make -C include/ft_printf/ --no-print-directory
+	@make -C include/ft_printf/ bonus --no-print-directory
 
 ${NAME}: ${OBJS} ${HEADER}
 	@cp include/ft_printf/libftprintf.a .
