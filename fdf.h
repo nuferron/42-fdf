@@ -59,6 +59,12 @@ typedef struct s_angle
 	float	z;
 }				t_angle;
 
+typedef struct s_map
+{
+	t_point			*point;
+	struct s_map	*next;
+}				t_map;
+
 typedef struct s_structs
 {
 	t_data		*data;
@@ -79,7 +85,7 @@ float			getting_float(float num);
 int				ft_round(float num);
 int				file_type(char *path);
 int				error_management(char *path);
-void			read_map(int fd, t_structs *all);
+t_list			*read_map(int fd, t_structs *all);
 unsigned int	getting_color(char *str);
 void			translation(t_structs *all, int key);
 void			rotation(t_structs *all, int key);
@@ -88,5 +94,13 @@ t_point			*create_cube(t_structs *all);
 void			update_map(t_structs *all);
 t_point			**create_map(t_structs *all);
 void			go_black(t_data *data);
+
+struct s_map	*mapnew(t_point *content, t_structs all);
+void			mapadd_back(t_map **map, t_map *new);
+t_map			*maplast(t_map *map);
+
+void			free_matrix(t_structs all, char **matrix);
+void			free_list(t_list *lst);
+void			*free_them_all(t_structs all, char **mat, t_list *lst, t_point *p);
 
 #endif
