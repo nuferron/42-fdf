@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 00:53:45 by nuferron          #+#    #+#             */
-/*   Updated: 2023/03/02 00:53:48 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/06 18:33:05 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*aux;
 
+	if (!lst)
+		return ;
 	if (*lst == NULL)
 	{
 		*lst = new;
