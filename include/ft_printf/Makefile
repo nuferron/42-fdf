@@ -6,7 +6,7 @@
 #    By: nuferron <nuferron@student.42barcelona.co  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/14 00:01:43 by nuferron          #+#    #+#              #
-#    Updated: 2023/08/13 13:03:44 by nuferron         ###   ########.fr        #
+#    Updated: 2023/09/06 15:58:09 by nuferron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ all: make_libs ${NAME}
 bonus: make_libs do_bonus
 
 make_libs:
-	@make -C libft/
+	@make -C libft/ bonus
 
 ${NAME}: ${OBJS}
 	cp libft/libft.a $(NAME)
