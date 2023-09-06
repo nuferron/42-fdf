@@ -169,6 +169,7 @@ int	main(int argc, char **argv)
 	angle.z = 0;
 	all.data = &data;
 	all.angle = angle;
+
 	//create_cube(&all);
 	create_map(&all);
 	mlx_hook(data.mlx_win, 17, 0, close_win, &data);
