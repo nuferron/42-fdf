@@ -104,6 +104,7 @@ t_list	*read_map(int fd, t_structs *all)
 			return ((t_list *)free_them_all(*all, coords, map, points));
 		}
 		ft_lstadd_back(&map, tmp);
+		if (map->next)
 		all->max_row++;
 	}
 	return (map);
