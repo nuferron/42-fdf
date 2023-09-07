@@ -94,18 +94,26 @@ void	xiaolin_ft(t_data *data, t_point origin, t_point final, t_xiaolin wu)
 	print_in_between(data, wu, wu.diff);
 }
 
-void	transformation(t_point *origin, t_point *final, t_angle angle)
+void	transformation(t_point *origin, t_point *final, t_structs all)
 {
 	if (origin->z != 0)
 	{
-		origin->x = origin->x + sin(angle.x) * origin->z;
-		origin->y = origin->y + sin(angle.y) * origin->z;
+		origin->x += sin(all.angle.x) * origin->z;
+		origin->y += sin(all.angle.y) * origin->z;
 	}
 	if (final->z != 0)
 	{
-		final->x = final->x + sin(angle.x) * final->z;
-		final->y = final->y + sin(angle.y) * final->z;
+		final->x += sin(all.angle.x) * final->z;
+		final->y += sin(all.angle.y) * final->z;
 	}
+}
+
+void	put_on_place(t_point *origin, t_point *final, t_structs all)
+{
+	origin->x = (origin->x + all.pox) * all.zoom;
+	origin->y = (origin->y + all.poy) * all.zoom;
+	final->x = (final->x + all.pox) * all.zoom;
+	final->y = (final->y + all.poy) * all.zoom;
 }
 
 void	print_line(t_structs *all, t_point origin, t_point final)
@@ -114,9 +122,8 @@ void	print_line(t_structs *all, t_point origin, t_point final)
 	float		dy;
 	t_xiaolin	wu;
 
-	printf("ox %f\toy %f\toz %f\n", origin.x, origin.y, origin.z);
-	printf("fx %f\tfy %f\tfz %f\n", final.x, final.y, final.z);
-	transformation(&origin, &final, all->angle);
+	put_on_place(&origin, &final, *all);
+	transformation(&origin, &final, *all);
 	wu.diff = ft_abs(final.y - origin.y) > ft_abs(final.x - origin.x);
 	swap_coord(&origin, &final, wu.diff);
 	dx = final.x - origin.x;
