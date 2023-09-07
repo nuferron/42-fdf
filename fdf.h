@@ -19,14 +19,6 @@ typedef struct s_data
 	int		endian;
 }				t_data;
 
-typedef struct s_square
-{
-	int	x;
-	int	y;
-	int	dim;
-	int	color;
-}				t_square;
-
 typedef struct s_point
 {
 	float				x;
@@ -59,12 +51,6 @@ typedef struct s_angle
 	float	z;
 }				t_angle;
 
-typedef struct s_map
-{
-	t_point			*point;
-	struct s_map	*next;
-}				t_map;
-
 typedef struct s_structs
 {
 	t_data		*data;
@@ -73,31 +59,29 @@ typedef struct s_structs
 	int			max_col;
 	int			max_row;
 	t_angle		angle;
-	t_point		**map;
+	t_list		*map;
+	float		zoom;
+	float		pox;
+	float		poy;
 }				t_structs;
 
-void			print_pixel(t_data *data, int x, int y, int color);
 unsigned int	trgb_to_hex(int t, int r, int g, int b);
-void			print_square(t_data *data, t_square *square);
+unsigned int	getting_color(char *str);
+void			print_pixel(t_data *data, int x, int y, int color);
 void			print_line(t_structs *all, t_point origin, t_point final);
+void			go_black(t_data *data);
+void			update_map(t_structs *all);
+
 float			ft_abs(float num);
 float			getting_float(float num);
 int				ft_round(float num);
+
 int				file_type(char *path);
 int				error_management(char *path);
 t_list			*read_map(int fd, t_structs *all);
-unsigned int	getting_color(char *str);
+
 void			translation(t_structs *all, int key);
 void			rotation(t_structs *all, int key);
-void			update_cube(t_structs *all);
-t_point			*create_cube(t_structs *all);
-void			update_map(t_structs *all);
-t_point			**create_map(t_structs *all);
-void			go_black(t_data *data);
-
-struct s_map	*mapnew(t_point *content, t_structs all);
-void			mapadd_back(t_map **map, t_map *new);
-t_map			*maplast(t_map *map);
 
 void			free_matrix(t_structs all, char **matrix);
 void			free_list(t_list *lst);
