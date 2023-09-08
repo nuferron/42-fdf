@@ -13,84 +13,73 @@ void	translation(t_structs *all, int key)
 	update_map(all);
 }
 
-/*void	rotation_x(t_structs *all)
+void	rotation_x(t_structs *all, t_point *origin, t_point *final)
 {
-	int		i;
-	t_list	*tmp;
 	float	y;
+	float	cosinus;
+	float	sinus;
 
-	while (i < all->max_row)
+	cosinus = cos(PI / 9 * all->rotx);
+	sinus = sin(PI / 9 * all->rotx);
+	if (all->rotx != 0)
 	{
-		j = 0;
-		while (j < all->max_col)
-		{
-			y = all->map[i][j].y;
-			all->map[i][j].y = y * cos(PI / 9) - z * sin(PI / 9);
-			all->map[i][j].z = y * sin(PI / 9) + z * cos(PI / 9);
-			j++;
-		}
-		tmp->next
+		y = origin->y;
+		origin->y = (y * cosinus - origin->z * sinus);
+		origin->z = (y * sinus + origin->z * cosinus);
+		y = final->y;
+		final->y = (y * cosinus - final->z * sinus);
+		final->z = (y * sinus + final->z * cosinus);
 	}
-	all->angle.x += PI / 9;
-	if (all->angle.x >= 2 * PI)
-		all->angle.x -= 2 * PI;
 }
 
-void	rotation_y(t_structs *all)
+void	rotation_y(t_structs *all, t_point *origin, t_point *final)
 {
-	int		i;
-	int		j;
 	float	x;
+	float	cosinus;
+	float	sinus;
 
-	i = 0;
-	while (i < all->max_row)
+	cosinus = cos(PI / 9 * all->roty);
+	sinus = sin(PI / 9 * all->roty);
+	if (all->roty != 0)
 	{
-		j = 0;
-		while (j < all->max_col)
-		{
-			x = all->map[i][j].x;
-			all->map[i][j].x = x * cos(PI / 9) + z * sin(PI / 9);
-			all->map[i][j].z = -x * sin(PI / 9) + z * cos(PI / 9);
-			j++;
-		}
-		i++;
+		x = origin->x;
+		origin->x = (x * cosinus + origin->z * sinus);
+		origin->z = (-x * sinus + origin->z * cosinus);
+		x = final->x;
+		final->x = (x * cosinus + final->z * sinus);
+		final->z = (-x * sinus + final->z * cosinus);
 	}
-	all->angle.x += PI / 9;
-	if (all->angle.x >= 2 * PI)
-		all->angle.x -= 2 * PI;
 }
 
-void	rotation_z(t_structs *all)
+void	rotation_z(t_structs *all, t_point *origin, t_point *final)
 {
-	int		i;
-	int		j;
 	float	x;
+	float	cosinus;
+	float	sinus;
 
-	i = 0;
-	while (i < all->max_row)
+	cosinus = cos(PI / 9 * all->rotz);
+	sinus = sin(PI / 9 * all->rotz);
+	if (all->rotz != 0)
 	{
-		j = 0;
-		while (j < all->max_col)
-		{
-			x = all->map[i][j].x;
-			all->map[i][j].x = x * cos(PI / 9) - y * sin(PI / 9);
-			all->map[i][j].y = x * sin(PI / 9) + y * cos(PI / 9);
-			j++;
-		}
-		i++;
+		x = origin->x;
+		origin->x = (x * cosinus - origin->y * sinus);
+		origin->y = (x * sinus + origin->y * cosinus);
+		x = final->x;
+		final->x = (x * cosinus - final->y * sinus);
+		final->y = (x * sinus + final->y * cosinus);
 	}
-	all->angle.x += PI / 9;
-	if (all->angle.x >= 2 * PI)
-		all->angle.x -= 2 * PI;
 }
 
 void	rotation(t_structs *all, int key)
 {
 	if (key == X)
-		rotation_x(all);
+	{
+		all->rotx += 1;
+		printf("rotation x %d\n", all->rotx);
+	}
 	else if (key == Y)
-		rotation_y(all);
+		all->roty += 1;
 	else if (key == Z)
-		rotation_z(all);
+		all->rotz += 1;
 	update_map(all);
-}*/
+}
