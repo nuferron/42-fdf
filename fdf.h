@@ -63,6 +63,9 @@ typedef struct s_structs
 	float		zoom;
 	float		pox;
 	float		poy;
+	int			rotx;
+	int			roty;
+	int			rotz;
 }				t_structs;
 
 unsigned int	trgb_to_hex(int t, int r, int g, int b);
@@ -82,6 +85,9 @@ t_list			*read_map(int fd, t_structs *all);
 
 void			translation(t_structs *all, int key);
 void			rotation(t_structs *all, int key);
+void			rotation_x(t_structs *all, t_point *origin, t_point *final);
+void			rotation_y(t_structs *all, t_point *origin, t_point *final);
+void			rotation_z(t_structs *all, t_point *origin, t_point *final);
 
 void			free_matrix(t_structs all, char **matrix);
 void			free_list(t_list *lst);
