@@ -50,8 +50,8 @@ int	read_keys(int key, t_structs *all)
 		close_win(all->data);
 	else if (key == RIGHT || key == LEFT || key == UP || key == DOWN)
 		translation(all, key);
-	//else if (key == X || key == Y || key == Z)
-	//	rotation(all, key);
+	else if (key == X || key == Y || key == Z)
+		rotation(all, key);
 	return (0);
 }
 
@@ -76,6 +76,7 @@ int	main(int argc, char **argv)
 	if (fd == -1)
 		return (-1);
 	map = read_map(fd, &all);
+//protection
 	data.mlx = mlx_init();
 	data.mlx_win = mlx_new_window(data.mlx, MAX_X, MAX_Y, "Proves");
 	data.img = mlx_new_image(data.mlx, MAX_X, MAX_Y);
@@ -87,8 +88,11 @@ int	main(int argc, char **argv)
 	all.zoom = 3;
 	all.data = &data;
 	all.angle = angle;
-	all.pox = 200;
-	all.poy = 200;
+	all.pox = (int)MAX_X / 2;
+	all.poy = (int)MAX_Y / 2;
+	all.rotx = 0;
+	all.roty = 0;
+	all.roty = 0;
 
 	all.map = map;
 	update_map(&all);
