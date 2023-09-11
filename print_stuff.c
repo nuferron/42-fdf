@@ -1,8 +1,8 @@
 #include "fdf.h"
 
-unsigned int trgb_to_hex(int t, int r, int g, int b) {
+/*unsigned int	trgb_to_hex(int t, int r, int g, int b) {
     return ((t & 0xFF) << 24) | ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
-}
+}*/
 
 void	print_pixel(t_data *data, int x, int y, int color)
 {
