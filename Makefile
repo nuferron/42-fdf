@@ -1,12 +1,12 @@
 SRCS =	main.c print_stuff.c xiaolin_alg.c maths.c colors.c errors.c \
-		tests.c read_map.c free_file.c movements.c#read2.c #colors.c
+		tests.c read_map.c free_file.c movements.c
 
 OBJS = ${SRCS:.c=.o}
 
 NAME = fdf
-HEADER = fdf.h
+HEADER = fdf.h macros.h
 CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address
-BIN = fdf
+BIN = ./fdf
 MLXHEADER = mlx.h
 MLXFLAGS = -Lminilibx -lmlx -framework OpenGL -framework AppKit
 
@@ -26,6 +26,9 @@ norm:
 	@make -C include/ft_printf norm --no-print-directory
 	norminette ${SRCS} | grep -v "OK" | awk '{if($$2 == "Error!") \
 	print "\033[1;31;m"$$1" "$$2; else print "\033[0;m"$$0}'
+
+leaks:
+	leaks -atExit -- ${BIN} ${MAP}
 
 clean:
 	rm -f ${OBJS} ${OBJS_BONUS}
