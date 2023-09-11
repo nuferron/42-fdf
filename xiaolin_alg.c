@@ -31,6 +31,7 @@ void	initialize_wu(t_xiaolin *wu, t_point point, int num)
 		wu->yend = (int)point.y + wu->gradient * (wu->xend - point.x);
 		wu->xgap = 1 - getting_float(point.x + 0.5);
 		wu->x1 = wu->xend;
+		wu->colo = point.color;
 	}
 	else
 	{
@@ -38,11 +39,12 @@ void	initialize_wu(t_xiaolin *wu, t_point point, int num)
 		wu->yend = point.y + wu->gradient * (wu->xend - point.x);
 		wu->xgap = getting_float(point.x + 0.5);
 		wu->x2 = wu->xend;
+		wu->colf = point.color;
 	}
 	wu->y = (int)wu->yend;
 }
 
-void	print_extremes(t_data *data, t_xiaolin *wu, int diff, int num)
+void	print_extremes(t_structs *all, t_xiaolin *wu, int diff, int num)
 {
 	float	var;
 
@@ -52,24 +54,24 @@ void	print_extremes(t_data *data, t_xiaolin *wu, int diff, int num)
 		var = wu->x2;
 	if (diff)
 	{
-		print_pixel(data, wu->y, var, 0xFF0000);
-		print_pixel(data, wu->y + 1, var, 0x00FF);
+		print_pixel(all->data, wu->y, var, wu->colo);
+		print_pixel(all->data, wu->y + 1, var, wu->colo);
 	}
 	else
 	{	
-		print_pixel(data, var, wu->y, 0xFF0000);
-		print_pixel(data, var + 1, wu->y, 0x00FF);
+		print_pixel(all->data, var, wu->y, wu->colo);
+		print_pixel(all->data, var + 1, wu->y, wu->colo);
 	}
 }
 
-void	print_in_between(t_data *data, t_xiaolin wu, int diff)
+void	print_in_between(t_structs *all, t_xiaolin wu, int diff)
 {
 	if (diff)
 	{
 		while (wu.x1 < wu.x2)
 		{
-			print_pixel(data, wu.intery, wu.x1, 0xFF0000);
-			print_pixel(data, wu.intery + 1, wu.x1++, 0x00FF);
+			print_pixel(all->data, wu.intery, wu.x1, wu.colo);
+			print_pixel(all->data, wu.intery + 1, wu.x1++, wu.colo);
 			wu.intery += wu.gradient;
 		}
 	}
@@ -77,21 +79,21 @@ void	print_in_between(t_data *data, t_xiaolin wu, int diff)
 	{
 		while (wu.x1 < wu.x2)
 		{
-			print_pixel(data, wu.x1, wu.intery, 0xFF0000);
-			print_pixel(data, wu.x1++, wu.intery + 1, 0x00FF);
+			print_pixel(all->data, wu.x1, wu.intery, wu.colo);
+			print_pixel(all->data, wu.x1++, wu.intery + 1, wu.colo);
 			wu.intery += wu.gradient;
 		}
 	}
 }
 
-void	xiaolin_ft(t_data *data, t_point origin, t_point final, t_xiaolin wu)
+void	xiaolin_ft(t_structs *all, t_point origin, t_point final, t_xiaolin wu)
 {
 	initialize_wu(&wu, origin, 1);
-	print_extremes(data, &wu, wu.diff, 1);
+	print_extremes(all, &wu, wu.diff, 1);
 	initialize_wu(&wu, final, 2);
-	print_extremes(data, &wu, wu.diff, 2);
+	print_extremes(all, &wu, wu.diff, 2);
 	wu.x1++;
-	print_in_between(data, wu, wu.diff);
+	print_in_between(all, wu, wu.diff);
 }
 
 void	put_on_place(t_point *origin, t_point *final, t_structs *all)
@@ -99,10 +101,10 @@ void	put_on_place(t_point *origin, t_point *final, t_structs *all)
 	rotation_x(all, origin, final);
 	rotation_y(all, origin, final);
 	rotation_z(all, origin, final);
-	origin->x = (origin->x * all->zoom + all->pox);
-	origin->y = (origin->y * all->zoom + all->poy);
-	final->x = (final->x * all->zoom + all->pox);
-	final->y = (final->y * all->zoom + all->poy);
+	origin->x = origin->x * all->design->zoom + all->design->pox;
+	origin->y = origin->y * all->design->zoom + all->design->poy;
+	final->x = final->x * all->design->zoom + all->design->pox;
+	final->y = final->y * all->design->zoom + all->design->poy;
 }
 
 void	print_line(t_structs *all, t_point origin, t_point final)
@@ -120,5 +122,5 @@ void	print_line(t_structs *all, t_point origin, t_point final)
 		wu.gradient = 1;
 	else
 		wu.gradient = dy / dx;
-	xiaolin_ft(all->data, origin, final, wu);
+	xiaolin_ft(all, origin, final, wu);
 }
