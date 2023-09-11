@@ -29,19 +29,17 @@ typedef struct s_point
 
 typedef struct s_xiaolin
 {
-	float	x1;
-	float	x2;
-	float	y;
-	float	xend;
-	float	yend;
-	float	xgap;
-	float	gradient;
-	float	intery;
-	int		diff;
-	int		ax;
-	int		ay;
-	int		bx;
-	int		by;
+	float			x1;
+	float			x2;
+	float			y;
+	float			xend;
+	float			yend;
+	float			xgap;
+	float			gradient;
+	float			intery;
+	int				diff;
+	int				colo;
+	int				colf;
 }				t_xiaolin;
 
 typedef struct s_angle
@@ -50,6 +48,17 @@ typedef struct s_angle
 	float	y;
 	float	z;
 }				t_angle;
+
+typedef struct s_design
+{
+	float	zoom;
+	float	pox;
+	float	poy;
+	int		rotx;
+	int		roty;
+	int		rotz;
+	int		height;
+}				t_design;
 
 typedef struct s_structs
 {
@@ -60,15 +69,11 @@ typedef struct s_structs
 	int			max_row;
 	t_angle		angle;
 	t_list		*map;
-	float		zoom;
-	float		pox;
-	float		poy;
-	int			rotx;
-	int			roty;
-	int			rotz;
+	t_design	*design;
 }				t_structs;
 
 unsigned int	trgb_to_hex(int t, int r, int g, int b);
+unsigned int	anti_alising(unsigned int color);
 unsigned int	getting_color(char *str);
 void			print_pixel(t_data *data, int x, int y, int color);
 void			print_line(t_structs *all, t_point origin, t_point final);
@@ -88,9 +93,11 @@ void			rotation(t_structs *all, int key);
 void			rotation_x(t_structs *all, t_point *origin, t_point *final);
 void			rotation_y(t_structs *all, t_point *origin, t_point *final);
 void			rotation_z(t_structs *all, t_point *origin, t_point *final);
+void			projection(t_structs *all, int key);
+void			restart(t_structs *all);
 
 void			free_matrix(t_structs all, char **matrix);
-void			free_list(t_list *lst);
+void			free_list(t_structs *all, t_list *lst);
 void			*free_them_all(t_structs all, char **mat, t_list *lst, t_point *p);
 
 #endif
