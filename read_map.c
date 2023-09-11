@@ -1,21 +1,5 @@
 #include "fdf.h"
 
-//while mapa
-//	llegir linia
-//		while linia
-//			guardar coordenades
-//			if len > 1
-//				color = split(punt, ',')
-//				point.color = color[1]
-//			else
-//				point.color = default
-//			if error
-//				free all
-//				return ;
-//			linia++
-//	mapa++
-//return points
-
 char	*getting_row(t_structs *all, int fd)
 {
 	char	*line;
@@ -27,7 +11,8 @@ char	*getting_row(t_structs *all, int fd)
 	len = ft_wordcount(line, ' ');
 	if (all->max_col != 0 && all->max_col != len)
 	{
-		ft_printf("Watch out! This map is irregular!\n");
+		ft_printf("\033[1;31;mWatch out! This map is irregular!\n\033[0;m");
+		ft_printf("\033[1;33;mOmitting irregular part.\n\033[0;m");
 		return (NULL);
 	}
 	all->max_col = len;
@@ -46,21 +31,16 @@ t_point	*getting_row_points(t_structs all, char **coords)
 		return (NULL);
 	while (col < all.max_col)
 	{
-		row_points[col].x = col;
+		row_points[col].x = col - all.max_col / 2;
 		row_points[col].y = all.max_row;
 		row_points[col].z = ft_atoi(coords[col]);
 		color = ft_split(coords[col], ',');
 		if (!color)
-		{
-			//free them all
-			free_them_all(all, color, 0, 0);
-			//ft_printf("Uh-oh there seems to be some memory problems\n");
-			return (NULL);
-		}
+			return (free_them_all(all, color, 0, 0));
 		if (color[1])
 			row_points[col].color = getting_color(color[1]);
 		else
-			row_points[col].color = 0x00FF0000;
+			row_points[col].color = 0x0000FF00;
 		col++;
 	}
 	return (row_points);
@@ -84,28 +64,24 @@ t_list	*read_map(int fd, t_structs *all)
 			break ;
 		coords = ft_split(row, ' ');
 		if (!coords)
-		{
-			//free them all
-			//ft_printf("Uh-oh there seems to be some memory problems\n");
 			return ((t_list *)free_them_all(*all, coords, map, points));
-		}
 		points = getting_row_points(*all, coords);
 		if (!points)
-		{
-			//free them all
-			//ft_printf("Uh-oh there seems to be some memory problems\n");
 			return ((t_list *)free_them_all(*all, coords, map, points));
-		}
 		tmp = ft_lstnew(points);
 		if (!tmp)
-		{
-			//free them all
-			//ft_printf("Uh-oh there seems to be some memory problems\n");
 			return ((t_list *)free_them_all(*all, coords, map, points));
-		}
 		ft_lstadd_back(&map, tmp);
-		if (map->next)
 		all->max_row++;
+	}
+	tmp = map;
+	int	i;
+	while (tmp)
+	{
+		i = 0;
+		while (i < all->max_col)
+			((t_point *)(tmp->content))[i++].y -= all->max_row / 2;
+		tmp = tmp->next;
 	}
 	return (map);
 }
