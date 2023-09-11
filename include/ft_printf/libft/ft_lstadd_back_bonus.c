@@ -6,23 +6,26 @@
 /*   By: nuferron <nuferron@student.42barcelona.co  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 00:53:45 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/06 18:33:05 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/11 21:19:09 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+t_list	*ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*aux;
 
 	if (!lst)
-		return ;
+		return (NULL);
+	if (!new)
+		return (NULL);
 	if (*lst == NULL)
 	{
 		*lst = new;
-		return ;
+		return (new);
 	}
 	aux = ft_lstlast(*lst);
 	aux->next = new;
+	return (new);
 }

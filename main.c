@@ -1,32 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/11 20:25:54 by nuferron          #+#    #+#             */
+/*   Updated: 2023/09/11 21:30:06 by nuferron         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
-#include <stdio.h>
-#include <math.h>
-
-void	go_black(t_data *data)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	while (x < 1300)
-	{
-		y = 0;
-		while (y < 1300)
-		{
-			print_pixel(data, x, y, 0x000000);
-			y++;
-		}
-		x++;
-	}
-}
 
 int	close_win(t_structs *all)
 {
 	if (all->data)
 		mlx_destroy_window(all->data->mlx, all->data->mlx_win);
 	free_list(all, all->map);
-	//free_them_all(*all, 0, all->map, 0);
-	//necessito fer free sense que m'imprimeixi l'error. a mes crec que no estic alliberant be el map!
 	exit(EXIT_SUCCESS);
 }
 
@@ -60,48 +50,41 @@ int	read_keys(int key, t_structs *all)
 	return (0);
 }
 
-/*int	tutorial(int x, int y, t_structs *all)
+t_data	getting_data(void)
 {
-	(void)all;
-	printf("mouse x %d\ty %d\n", x, y);
-	return (0);
-}*/
+	t_data	data;
+
+	data.mlx = mlx_init();
+	data.mlx_win = mlx_new_window(data.mlx, MAX_X, MAX_Y, "FDF");
+	data.img = mlx_new_image(data.mlx, MAX_X, MAX_Y);
+	data.addr = mlx_get_data_addr(data.img, &data.bpp, \
+			&data.line_len, &data.endian);
+	return (data);
+}
 
 int	main(int argc, char **argv)
 {
 	t_data		data;
 	t_design	design;
 	t_structs	all;
-	t_angle		angle;
-	t_list		*map;
 	int			fd;
 
 	if (argc != 2)
-		return (ft_printf("Invalid number of arguments!\n"));
+		return (ft_printf("\033[31;1mInvalid number of arguments!\n"));
 	fd = error_management(argv[1]);
 	if (fd == -1)
 		return (-1);
-	map = read_map(fd, &all);
-	if (!map)
+	all.max_col = 0;
+	all.max_row = 0;
+	all.map = read_map(fd, &all);
+	if (!all.map)
 		return (-1);
-	data.mlx = mlx_init();
-	data.mlx_win = mlx_new_window(data.mlx, MAX_X, MAX_Y, "Proves");
-	data.img = mlx_new_image(data.mlx, MAX_X, MAX_Y);
-	data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.line_len, &data.endian);
-
 	all.design = &design;
-	angle.x = 0;
-	angle.y = 0;
-	angle.z = 0;
+	data = getting_data();
 	all.data = &data;
-	all.angle = angle;
 	restart(&all);
-
-	all.map = map;
-	update_map(&all);
-	mlx_hook(data.mlx_win, 17, 0, close_win, &all);
-	mlx_hook(data.mlx_win, 2, 0, read_keys, &all);
-	mlx_hook(data.mlx_win, 4, 0, read_mouse, &all);
-	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img, 0, 0);
+	mlx_hook(all.data->mlx_win, 17, 0, close_win, &all);
+	mlx_hook(all.data->mlx_win, 2, 0, read_keys, &all);
+	mlx_hook(all.data->mlx_win, 4, 0, read_mouse, &all);
 	mlx_loop(all.data->mlx);
 }

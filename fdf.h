@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/11 21:23:15 by nuferron          #+#    #+#             */
+/*   Updated: 2023/09/11 21:23:17 by nuferron         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 
@@ -42,13 +54,6 @@ typedef struct s_xiaolin
 	int				colf;
 }				t_xiaolin;
 
-typedef struct s_angle
-{
-	float	x;
-	float	y;
-	float	z;
-}				t_angle;
-
 typedef struct s_design
 {
 	float	zoom;
@@ -67,18 +72,22 @@ typedef struct s_structs
 	t_xiaolin	wu;
 	int			max_col;
 	int			max_row;
-	t_angle		angle;
 	t_list		*map;
 	t_design	*design;
 }				t_structs;
 
-unsigned int	trgb_to_hex(int t, int r, int g, int b);
-unsigned int	anti_alising(unsigned int color);
 unsigned int	getting_color(char *str);
 void			print_pixel(t_data *data, int x, int y, int color);
 void			print_line(t_structs *all, t_point origin, t_point final);
 void			go_black(t_data *data);
 void			update_map(t_structs *all);
+
+void			swap_coord(t_point *origin, t_point *final, int diff);
+void			xiaolin_ft(t_structs *all, t_point o, t_point f, t_xiaolin wu);
+void			put_on_place(t_point *origin, t_point *final, t_structs *all);
+void			initialize_wu(t_xiaolin *wu, t_point point, int num);
+void			print_extremes(t_structs *all, t_xiaolin *wu, int dif, int num);
+void			print_in_between(t_structs *all, t_xiaolin wu, int diff);
 
 float			ft_abs(float num);
 float			getting_float(float num);
@@ -98,6 +107,6 @@ void			restart(t_structs *all);
 
 void			free_matrix(t_structs all, char **matrix);
 void			free_list(t_structs *all, t_list *lst);
-void			*free_them_all(t_structs all, char **mat, t_list *lst, t_point *p);
+void			*free_them_all(t_structs all, char **m, t_list *l, t_point *p);
 
 #endif

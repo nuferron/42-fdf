@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/11 20:02:20 by nuferron          #+#    #+#             */
+/*   Updated: 2023/09/11 21:21:48 by nuferron         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 char	*getting_row(t_structs *all, int fd)
@@ -11,8 +23,8 @@ char	*getting_row(t_structs *all, int fd)
 	len = ft_wordcount(line, ' ');
 	if (all->max_col != 0 && all->max_col != len)
 	{
-		ft_printf("\033[1;31;mWatch out! This map is irregular!\n\033[0;m");
-		ft_printf("\033[1;33;mOmitting irregular part.\n\033[0;m");
+		ft_printf("\033[1;31;mWatch out! This map is irregular!\n");
+		ft_printf("\033[1;33;mOnly the regular part will be printed.\n");
 		return (NULL);
 	}
 	all->max_col = len;
@@ -42,40 +54,18 @@ t_point	*getting_row_points(t_structs all, char **coords)
 		else
 			row_points[col].color = 0x0000FF00;
 		col++;
+		free_matrix(all, color);
 	}
+	free_matrix(all, coords);
 	return (row_points);
 }
 
-t_list	*read_map(int fd, t_structs *all)
+t_list	*correct_y(t_structs *all, t_list *map)
 {
-	t_list	*map;
 	t_list	*tmp;
-	t_point	*points;
-	char	*row;
-	char	**coords;
+	int		i;
 
-	all->max_col = 0;
-	all->max_row = 0;
-	map = NULL;
-	while (1)
-	{
-		row = getting_row(all, fd);
-		if (!row)
-			break ;
-		coords = ft_split(row, ' ');
-		if (!coords)
-			return ((t_list *)free_them_all(*all, coords, map, points));
-		points = getting_row_points(*all, coords);
-		if (!points)
-			return ((t_list *)free_them_all(*all, coords, map, points));
-		tmp = ft_lstnew(points);
-		if (!tmp)
-			return ((t_list *)free_them_all(*all, coords, map, points));
-		ft_lstadd_back(&map, tmp);
-		all->max_row++;
-	}
 	tmp = map;
-	int	i;
 	while (tmp)
 	{
 		i = 0;
@@ -84,4 +74,31 @@ t_list	*read_map(int fd, t_structs *all)
 		tmp = tmp->next;
 	}
 	return (map);
+}
+
+t_list	*read_map(int fd, t_structs *all)
+{
+	t_list	*map;
+	t_point	*points;
+	char	*row;
+	char	**coords;
+
+	map = NULL;
+	while (1)
+	{
+		row = getting_row(all, fd);
+		if (!row)
+			break ;
+		coords = ft_split(row, ' ');
+		free(row);
+		if (!coords)
+			return ((t_list *)free_them_all(*all, coords, map, points));
+		points = getting_row_points(*all, coords);
+		if (!points)
+			return ((t_list *)free_them_all(*all, coords, map, points));
+		if (!ft_lstadd_back(&map, ft_lstnew(points)))
+			return ((t_list *)free_them_all(*all, coords, map, points));
+		all->max_row++;
+	}
+	return (correct_y(all, map));
 }
