@@ -15,4 +15,10 @@
 # define Y				16
 # define Z				6
 # define PI				3.14159265359
+# define PLUS			69
+# define MINUS			78
+# define ISO			34
+# define PAN			35
+# define BIRDY			31
+# define RESTART		15
 #endif
