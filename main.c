@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 20:25:54 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/11 21:30:06 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/12 18:12:37 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(int argc, char **argv)
 	int			fd;
 
 	if (argc != 2)
-		return (ft_printf("\033[31;1mInvalid number of arguments!\n"));
+		return (ft_printf("\033[31;1mInvalid number of arguments!\n\033[0;m"));
 	fd = error_management(argv[1]);
 	if (fd == -1)
 		return (-1);
@@ -79,6 +79,12 @@ int	main(int argc, char **argv)
 	all.map = read_map(fd, &all);
 	if (!all.map)
 		return (-1);
+	if (all.max_col <= 1 && all.max_row <= 1)
+	{
+		ft_printf("\033[031;1mMap too short\n\033[0;m");
+		free_list(&all, all.map);
+		return (-1);
+	}
 	all.design = &design;
 	data = getting_data();
 	all.data = &data;

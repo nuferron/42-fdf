@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 20:01:14 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/11 21:31:48 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/12 17:55:37 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	update_map(t_structs *all)
 	int		col;
 	t_list	*tmp;
 
-	ft_printf("update map\n");
 	row = 0;
 	tmp = all->map;
 	go_black(all->data);

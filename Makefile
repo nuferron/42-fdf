@@ -6,7 +6,7 @@
 #    By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 20:02:39 by nuferron          #+#    #+#              #
-#    Updated: 2023/09/11 21:26:20 by nuferron         ###   ########.fr        #
+#    Updated: 2023/09/12 18:11:41 by nuferron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OBJS = ${SRCS:.c=.o}
 
 NAME = fdf
 HEADER = fdf.h macros.h
-CFLAGS = -Wall -Wextra -Werror -O3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address
 BIN = ./fdf
 MLXHEADER = mlx.h
 MLXFLAGS = -Lminilibx -lmlx -framework OpenGL -framework AppKit
@@ -30,7 +30,7 @@ all: make_libs ${NAME}
 make_libs:
 	@make -C include/ft_printf/ bonus --no-print-directory
 
-${NAME}: ${OBJS} ${HEADER} Makefile
+${NAME}: ${SRCS} ${OBJS} Makefile
 	@cp include/ft_printf/libftprintf.a .
 	cc ${CFLAGS} ${OBJS} ${MLXFLAGS} libftprintf.a -o ${NAME}
 
@@ -39,7 +39,7 @@ norm:
 	norminette ${SRCS} ${HEADER}| grep -v "OK" | awk '{if($$2 == "Error!") \
 	print "\033[1;31;m"$$1" "$$2; else print "\033[0;m"$$0}'
 
-leaks:
+leaks: ${OBJS}
 	leaks -atExit -- ${BIN} ${MAP}
 
 clean:
