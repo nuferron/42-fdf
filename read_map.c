@@ -23,8 +23,9 @@ char	*getting_row(t_structs *all, int fd)
 	len = ft_wordcount(line, ' ');
 	if (all->max_col != 0 && all->max_col != len)
 	{
+		free(line);
 		ft_printf("\033[1;31;mWatch out! This map is irregular!\n");
-		ft_printf("\033[1;33;mOnly the regular part will be printed.\n");
+		ft_printf("\033[1;33;mOnly the regular part will be printed.\n\033[0;m");
 		return (NULL);
 	}
 	all->max_col = len;
