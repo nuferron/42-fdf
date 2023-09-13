@@ -79,12 +79,6 @@ int	main(int argc, char **argv)
 	all.map = read_map(fd, &all);
 	if (!all.map)
 		return (-1);
-	if (all.max_col <= 1 && all.max_row <= 1)
-	{
-		ft_printf("\033[031;1mMap too short\n\033[0;m");
-		free_list(&all, all.map);
-		return (-1);
-	}
 	all.design = &design;
 	data = getting_data();
 	all.data = &data;
