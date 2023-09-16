@@ -6,16 +6,16 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 21:23:15 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/11 21:23:17 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:14:05 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "minilibx/mlx.h"
-# include "include/ft_printf/libftprintf.h"
-# include "include/ft_printf/libft/libft.h"
+# include "inc/minilibx/mlx.h"
+# include "inc/ft_printf/libftprintf.h"
+# include "inc/ft_printf/libft/libft.h"
 # include <stdlib.h>
 # include <math.h>
 # include "macros.h"

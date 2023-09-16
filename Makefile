@@ -6,52 +6,75 @@
 #    By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/11 20:02:39 by nuferron          #+#    #+#              #
-#    Updated: 2023/09/12 18:11:41 by nuferron         ###   ########.fr        #
+#    Updated: 2023/09/16 16:30:38 by nuferron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+RED = \033[1;31m
+GREEN = \033[1;32m
+YELLOW = \033[1;33m
+BLUE = \033[1;34m
+PURPLE = \033[1;35m
+CYAN = \033[1;36m
+WHITE = \033[1;37m
+RESET = \033[0m
 
 SRCS =	main.c xiaolin_alg.c maths.c colors.c errors.c print_utils.c \
 		read_map.c free_file.c movements.c xiaolin_utils.c rotation.c
 
-OBJS = ${SRCS:.c=.o}
-
+SRCDIR = src/
+OBJS = $(addprefix $(OBJDIR),$(SRCS:.c=.o))
+OBJDIR = obj/
 NAME = fdf
 HEADER = fdf.h macros.h
 CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address
-BIN = ./fdf
 MLXHEADER = mlx.h
-MLXFLAGS = -Lminilibx -lmlx -framework OpenGL -framework AppKit
-
-%.o: %.c
-	cc ${CFLAGS} -Imlx -c $< -o $@
+LIB = libftprintf.a
+MLXFLAGS = -Linc/minilibx -lmlx -framework OpenGL -framework AppKit
+COLUMNS = $(shell tput cols)
 
 all: make_libs ${NAME}
 
 make_libs:
-	@make -C include/ft_printf/ bonus --no-print-directory
+	make -C inc/ft_printf bonus --no-print-directory
 
-${NAME}: ${SRCS} ${OBJS} Makefile
-	@cp include/ft_printf/libftprintf.a .
+${NAME}: ${OBJS}
+	cp inc/ft_printf/libftprintf.a .
 	cc ${CFLAGS} ${OBJS} ${MLXFLAGS} libftprintf.a -o ${NAME}
+	echo "\033[1;32;m./${NAME} successfully created \033[0;m"
 
 norm:
-	@make -C include/ft_printf norm --no-print-directory
-	norminette ${SRCS} ${HEADER}| grep -v "OK" | awk '{if($$2 == "Error!") \
-	print "\033[1;31;m"$$1" "$$2; else print "\033[0;m"$$0}'
+	make -C inc/ft_printf norm --no-print-directory
+	printf "${WHITE}FDF${RESET}\n"
+	norminette $(addprefix ${SRCDIR},$(SRCS)) $(addprefix ${SRCDIR_BNS},$(SRCS_BNS)) ${HEADER} | grep -v "OK" \
+	| awk '{if($$2 == "Error!") print "${RED}"$$1" "$$2; \
+	else print "${RESET}"$$0}'
 
-leaks: ${OBJS}
-	leaks -atExit -- ${BIN} ${MAP}
+leaks: ${NAME}
+	leaks -atExit -- ./${NAME} ${MAP}
+
+${OBJDIR}%.o: ${SRCDIR}%.c ${HEADER}
+	@printf "${WHITE}FDF: ${CYAN}Compiling files: ${WHITE}$(notdir $<)...${RESET}\r"
+	@mkdir -p $(dir $@)
+	@cc ${CFLAGS} -c $< -o $@
+	@printf "\r%-${COLUMNS}s\r"
 
 clean:
-	rm -f ${OBJS} ${OBJS_BONUS}
-	@make -C include/ft_printf clean --no-print-directory
+	if [ -d ${OBJDIR} ] ; then \
+		rm -rf ${OBJDIR} ${OBJDIR_BNS} combination; \
+		printf "${WHITE}FDF: ${RED}Objects have been deleted${RESET}\n"; \
+	fi
+	make -C inc/ft_printf clean --no-print-directory
 
-fclean:	clean
-	rm -f ${NAME} ${BIN} libftprintf.a
-	@make -C include/ft_printf fclean --no-print-directory
-	clear
+fclean: 	clean
+	if [ -e ${NAME} ] || [ -e ${LIB} ] ; then \
+		rm -f ${NAME} ${LIB} do_bonus ; \
+		printf "${WHITE}FDF: ${RED}All existing binaries have been deleted${RESET}\n" ; \
+	else printf "${WHITE}FDF: ${PURPLE}Already cleaned${RESET}\n" ; \
+	fi
+	make -C inc/ft_printf fclean --no-print-directory
 
 re:	fclean all
 
-.SILENT: norm
-.PHONY: all clean fclean re
+.SILENT: norm make_libs clean fclean leaks ${NAME}
+.PHONY: all clean fclean re leaks norm
