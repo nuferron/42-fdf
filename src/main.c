@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 20:25:54 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/14 16:11:40 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/23 14:28:50 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ int	read_keys(int key, t_structs *all)
 		projection(all, key);
 	else if (key == RESTART)
 		restart(all);
+	else if (key == WHITE_BKG)
+		change_background(all);
+	update_map(all);
 	return (0);
 }
 
@@ -83,6 +86,7 @@ int	main(int argc, char **argv)
 	data = getting_data();
 	all.data = &data;
 	restart(&all);
+	update_map(&all);
 	mlx_hook(all.data->mlx_win, 17, 0, close_win, &all);
 	mlx_hook(all.data->mlx_win, 2, 0, read_keys, &all);
 	mlx_hook(all.data->mlx_win, 4, 0, read_mouse, &all);

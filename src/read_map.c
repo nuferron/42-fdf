@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 20:02:20 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/14 16:12:50 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/23 14:35:37 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_point	*getting_row_points(t_structs all, char **coords)
 		if (color[1])
 			row_points[col].color = getting_color(color[1]);
 		else
-			row_points[col].color = 0x0000FF00;
+			row_points[col].color = 0x00FF00;
 		col++;
 		free_matrix(all, color);
 	}

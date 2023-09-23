@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 21:23:23 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/11 21:23:25 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/23 14:02:22 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,6 @@
 # define PAN			35
 # define BIRDY			31
 # define RESTART		15
+# define WHITE_BKG		13
+
 #endif

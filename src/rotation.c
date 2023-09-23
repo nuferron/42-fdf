@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 20:06:31 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/14 16:12:50 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/23 14:08:42 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,4 @@ void	rotation(t_structs *all, int key)
 		all->design->roty += 1;
 	else if (key == Z)
 		all->design->rotz += 1;
-	update_map(all);
 }

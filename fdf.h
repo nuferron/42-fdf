@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 21:23:15 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/14 16:14:05 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/23 14:30:46 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct s_data
 
 typedef struct s_point
 {
-	float				x;
-	float				y;
-	float				z;
-	unsigned int		color;
+	float	x;
+	float	y;
+	float	z;
+	int		color;
 }				t_point;
 
 typedef struct s_xiaolin
@@ -63,6 +63,7 @@ typedef struct s_design
 	int		roty;
 	int		rotz;
 	int		height;
+	int		background;
 }				t_design;
 
 typedef struct s_structs
@@ -79,7 +80,7 @@ typedef struct s_structs
 unsigned int	getting_color(char *str);
 void			print_pixel(t_data *data, int x, int y, int color);
 void			print_line(t_structs *all, t_point origin, t_point final);
-void			go_black(t_data *data);
+void			print_background(t_structs *all);
 void			update_map(t_structs *all);
 
 void			swap_coord(t_point *origin, t_point *final, int diff);
@@ -104,6 +105,7 @@ void			rotation_y(t_structs *all, t_point *origin, t_point *final);
 void			rotation_z(t_structs *all, t_point *origin, t_point *final);
 void			projection(t_structs *all, int key);
 void			restart(t_structs *all);
+void			change_background(t_structs *all);
 
 void			free_matrix(t_structs all, char **matrix);
 void			free_list(t_structs *all, t_list *lst);

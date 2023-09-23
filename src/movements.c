@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 20:06:22 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/14 16:12:49 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/09/23 14:16:15 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	translation(t_structs *all, int key)
 		all->design->poy -= 50;
 	else if (key == DOWN)
 		all->design->poy += 50;
-	update_map(all);
 }
 
 void	projection(t_structs *all, int key)
@@ -45,7 +44,6 @@ void	projection(t_structs *all, int key)
 		all->design->roty = 0;
 		all->design->rotz = 0;
 	}
-	update_map(all);
 }
 
 void	restart(t_structs *all)
@@ -56,5 +54,5 @@ void	restart(t_structs *all)
 	all->design->rotz = 1;
 	all->design->pox = (int)(MAX_X / 2);
 	all->design->poy = (int)(MAX_Y / 2);
-	update_map(all);
+	all->design->background = 0;
 }
