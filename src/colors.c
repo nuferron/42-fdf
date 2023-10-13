@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 20:02:02 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/14 16:09:47 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/10/12 00:00:39 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,19 @@ unsigned int	getting_color(char *str)
 		op = hex_to_hex(str[len - 1], str[len]);
 	return (create_trgb(op, red, green, blue));
 }
+
+void	invert_colors(t_structs *all)
+{
+	if (all->design->)
+}
+
+/*
+f = 0
+e = 1
+d = 2
+c = 3
+b = 4
+a = 5
+9 = 6
+8 = 7
+*/

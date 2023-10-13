@@ -6,7 +6,7 @@
 /*   By: nuferron <nuferron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 21:23:15 by nuferron          #+#    #+#             */
-/*   Updated: 2023/09/23 14:30:46 by nuferron         ###   ########.fr       */
+/*   Updated: 2023/10/12 00:00:15 by nuferron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct s_design
 	int		rotx;
 	int		roty;
 	int		rotz;
-	int		height;
+	int		invert;
 	int		background;
 }				t_design;
 
