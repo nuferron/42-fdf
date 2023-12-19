@@ -41,7 +41,7 @@ make_libs:
 ${NAME}: ${OBJS}
 	cp inc/ft_printf/libftprintf.a .
 	cc ${CFLAGS} ${OBJS} ${MLXFLAGS} libftprintf.a -o ${NAME}
-	echo "\033[1;32;m./${NAME} successfully created \033[0;m"
+	echo "${WHITE}FDF: ${GREEN}Binary successfully created!${RESET}"
 
 norm:
 	make -C inc/ft_printf norm --no-print-directory
